@@ -1,0 +1,106 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("USER") // "ADMIN" or "USER"
+  whatsapp  String?  @unique
+  address   String?  @db.Text
+  orders    Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id            String   @id @default(uuid())
+  name          String
+  description   String   @db.Text
+  divisi        Divisi
+  price         Decimal
+  minOrder      Int      @default(1)
+  status        Status   @default(ACTIVE)
+  images        Image[]
+  imageUrl      String?  @db.Text
+  videoUrl      String?  @db.Text
+  specifications String? @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Image {
+  id        String   @id @default(uuid())
+  url       String
+  productId String?
+  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  portfolioId String?
+  portfolio Portfolio? @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+}
+
+model Portfolio {
+  id          String   @id @default(uuid())
+  title       String
+  clientName  String?
+  description String?  @db.Text
+  divisi      Divisi
+  images      Image[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Content {
+  id        String   @id @default(uuid())
+  key       String   @unique // e.g. "HERO_TEXT", "ABOUT_TEXT", "WA_NUMBER"
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+}
+
+enum Divisi {
+  KONVEKSI
+  MERCH
+  DIGITAL_PRINTING
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  totalAmount Decimal
+  status      OrderStatus @default(PENDING)
+  items       OrderItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Decimal
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  COMPLETED
+  CANCELLED
+}

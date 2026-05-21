@@ -1,0 +1,180 @@
+export const dictionary = {
+  en: {
+    navbar: {
+      home: "Home",
+      services: "Services",
+      portfolio: "Portfolio",
+      about: "About",
+      contact: "Contact",
+      orderNow: "Order Now"
+    },
+    home: {
+      heroTitlePart1: "Create",
+      heroTitlePart2: "Without Limits.",
+      heroSubtitle: "Your visionary partner for premium apparel, merchandise, and digital printing.",
+      explore: "Explore",
+      popularTag: "Popular Picks + Best Sellers",
+      popularTitle: "Essential gear for your brand identity.",
+      popularDesc: "Our most loved curated selection of top-tier apparel, unique merchandise, and high-fidelity prints to elevate your community.",
+      shopAll: "Shop All Catalog",
+      div01: "Division 01",
+      konveksiTitle: "Tokraf Konveksi.",
+      konveksiDesc: "Premium apparel production crafted with uncompromising quality. Custom shirts, uniforms, and jackets tailored to perfection.",
+      exploreKonveksi: "Explore Apparel",
+      div02: "Division 02",
+      merchTitle: "Tokraf Merch.",
+      merchDesc: "Physical manifestations of your brand's identity. Custom totebags, mugs, keychains, and premium souvenirs.",
+      exploreMerch: "Explore Merchandise",
+      div03: "Division 03",
+      printTitle: "Digital Printing.",
+      printDesc: "Fast, high-fidelity printing solutions. From large format banners to precision cut premium stickers.",
+      explorePrint: "Explore Printing",
+      theStandard: "The Standard.",
+      theStandardDesc: "We don't just print logos. We craft physical manifestations of your brand's identity with uncompromising quality.",
+      whyUs1Title: "Premium Materials",
+      whyUs1Desc: "Sourced globally, crafted locally. Every thread and ink drop is selected for durability.",
+      whyUs2Title: "Accessible Pricing",
+      whyUs2Desc: "Designed for students and organizations without sacrificing the premium feel.",
+      whyUs3Title: "On-Time Delivery",
+      whyUs3Desc: "Your deadlines are our commands. We deliver exactly when we say we will.",
+      startProject: "Start Your <br/> Project.",
+      contactAdmin: "Contact Admin"
+    },
+    footer: {
+      desc: "Empowering creators and organizations with premium apparel, merchandise, and printing solutions.",
+      quickLinks: "Quick Links",
+      legal: "Legal",
+      terms: "Terms of Service",
+      privacy: "Privacy Policy",
+      rights: "All rights reserved."
+    },
+    kontak: {
+      letsTalk: "Let's Talk.",
+      reachOut: "Reach out to us for collaborations, inquiries, or just to say hi.",
+      office: "Office",
+      address: "Sekretariat HIMATIKA, Kampus UNU Yogyakarta, Jl. Lowanu No.47, Sorosutan, Yogyakarta",
+      sendMessage: "Send a Message",
+      name: "Name",
+      email: "Email",
+      message: "Message",
+      messagePlaceholder: "Tell us about your project...",
+      sendBtn: "Send Message"
+    },
+    layanan: {
+      allProducts: "All Products.",
+      everything: "Everything",
+      loading: "Loading products...",
+      noProducts: "No products found in this division.",
+      from: "From Rp"
+    },
+    portofolio: {
+      gallery: "The Gallery.",
+      galleryDesc: "A visual documentation of our uncompromising standards.",
+      wantBrandHere: "Want your brand here?",
+      startProject: "Start a Project"
+    },
+    tentang: {
+      ourStory: "Our Story.",
+      heading: "We are a collective of student creators driven by excellence.",
+      subheading: "Born from HIMATIKA UNU Yogyakarta, TOKRAF is more than a business unit. It's a laboratory of creativity.",
+      p1: "Starting from the need of student organizations for reliable uniform and merchandise vendors, TOKRAF was founded to provide a One Stop Creative Solution.",
+      p2: "We realize that visual and material quality is a representation of an entity's value. Therefore, every shirt stitch, every print pixel, and every merchandise touch is done with industrial professional standards.",
+      coreValues: "Our Core Values",
+      cv1Title: "Creative Integrity:",
+      cv1Desc: "Prioritizing honesty in materials and transparency in process.",
+      cv2Title: "Highest Standards:",
+      cv2Desc: "No compromises for the final product quality.",
+      cv3Title: "Student Synergy:",
+      cv3Desc: "Empowering and supporting the campus ecosystem activities."
+    }
+  },
+  id: {
+    navbar: {
+      home: "Beranda",
+      services: "Layanan",
+      portfolio: "Portofolio",
+      about: "Tentang",
+      contact: "Kontak",
+      orderNow: "Pesan Sekarang"
+    },
+    home: {
+      heroTitlePart1: "Berkarya",
+      heroTitlePart2: "Tanpa Batas.",
+      heroSubtitle: "Mitra visioner Anda untuk konveksi, merchandise, dan digital printing premium.",
+      explore: "Eksplorasi",
+      popularTag: "Pilihan Populer + Terlaris",
+      popularTitle: "Kebutuhan esensial identitas brand Anda.",
+      popularDesc: "Koleksi kurasi terbaik dari produk konveksi, merchandise unik, dan cetakan resolusi tinggi untuk mengangkat komunitas Anda.",
+      shopAll: "Lihat Semua Katalog",
+      div01: "Divisi 01",
+      konveksiTitle: "Tokraf Konveksi.",
+      konveksiDesc: "Produksi pakaian premium yang dibuat dengan kualitas tanpa kompromi. Kemeja, seragam, dan jaket custom yang dijahit sempurna.",
+      exploreKonveksi: "Eksplorasi Pakaian",
+      div02: "Divisi 02",
+      merchTitle: "Tokraf Merch.",
+      merchDesc: "Manifestasi fisik dari identitas brand Anda. Totebag, mug, gantungan kunci custom, dan suvenir premium.",
+      exploreMerch: "Eksplorasi Merchandise",
+      div03: "Divisi 03",
+      printTitle: "Digital Printing.",
+      printDesc: "Solusi pencetakan cepat dan beresolusi tinggi. Mulai dari spanduk format besar hingga stiker premium potongan presisi.",
+      explorePrint: "Eksplorasi Cetakan",
+      theStandard: "Standar Kami.",
+      theStandardDesc: "Kami tidak sekadar mencetak logo. Kami merancang perwujudan fisik dari identitas brand Anda dengan kualitas tanpa kompromi.",
+      whyUs1Title: "Bahan Premium",
+      whyUs1Desc: "Dipilih secara global, dirajut secara lokal. Setiap helai benang dan tetes tinta dipilih demi ketahanan.",
+      whyUs2Title: "Harga Terjangkau",
+      whyUs2Desc: "Didesain untuk mahasiswa dan organisasi tanpa mengorbankan nuansa premium.",
+      whyUs3Title: "Pengiriman Tepat Waktu",
+      whyUs3Desc: "Tenggat waktu Anda adalah perintah bagi kami. Kami mengirimkannya tepat seperti yang dijanjikan.",
+      startProject: "Mulai <br/> Proyek Anda.",
+      contactAdmin: "Hubungi Admin"
+    },
+    footer: {
+      desc: "Memberdayakan kreator dan organisasi dengan solusi pakaian, merchandise, dan pencetakan premium.",
+      quickLinks: "Tautan Cepat",
+      legal: "Legalitas",
+      terms: "Syarat Ketentuan",
+      privacy: "Kebijakan Privasi",
+      rights: "Seluruh hak cipta."
+    },
+    kontak: {
+      letsTalk: "Mari Berbincang.",
+      reachOut: "Hubungi kami untuk kolaborasi, pertanyaan, atau sekadar menyapa.",
+      office: "Kantor",
+      address: "Sekretariat HIMATIKA, Kampus UNU Yogyakarta, Jl. Lowanu No.47, Sorosutan, Yogyakarta",
+      sendMessage: "Kirim Pesan",
+      name: "Nama",
+      email: "Email",
+      message: "Pesan",
+      messagePlaceholder: "Ceritakan tentang proyek Anda...",
+      sendBtn: "Kirim Pesan"
+    },
+    layanan: {
+      allProducts: "Semua Produk.",
+      everything: "Semua",
+      loading: "Memuat produk...",
+      noProducts: "Tidak ada produk di divisi ini.",
+      from: "Mulai dari Rp"
+    },
+    portofolio: {
+      gallery: "Galeri Kami.",
+      galleryDesc: "Dokumentasi visual dari standar kualitas tanpa kompromi kami.",
+      wantBrandHere: "Ingin brand Anda di sini?",
+      startProject: "Mulai Proyek"
+    },
+    tentang: {
+      ourStory: "Kisah Kami.",
+      heading: "Kami adalah sekumpulan kreator mahasiswa yang digerakkan oleh keunggulan.",
+      subheading: "Lahir dari HIMATIKA UNU Yogyakarta, TOKRAF lebih dari sekadar unit usaha. Ini adalah laboratorium kreativitas.",
+      p1: "Berawal dari kebutuhan organisasi mahasiswa akan vendor seragam dan merchandise yang dapat diandalkan, TOKRAF didirikan untuk memberikan solusi terpadu (One Stop Creative Solution).",
+      p2: "Kami menyadari bahwa kualitas visual dan material adalah representasi dari nilai sebuah entitas. Oleh karena itu, setiap jahitan kemeja, setiap piksel cetakan, dan setiap sentuhan merchandise kami kerjakan dengan standar profesional industri.",
+      coreValues: "Nilai Inti Kami",
+      cv1Title: "Integritas Berkarya:",
+      cv1Desc: "Mengutamakan kejujuran dalam bahan dan transparansi proses.",
+      cv2Title: "Standar Tertinggi:",
+      cv2Desc: "Tidak ada kompromi untuk kualitas produk akhir.",
+      cv3Title: "Sinergi Mahasiswa:",
+      cv3Desc: "Memberdayakan dan mendukung kegiatan ekosistem kampus."
+    }
+  }
+};

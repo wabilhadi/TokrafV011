@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Outfit', system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  :root {
+    /* Base Colors: White, Pink, Maroon */
+    --background: #ffffff;
+    --foreground: #330000; /* Dark Maroon for text readability */
+    
+    --card: #ffffff;
+    --card-foreground: #330000;
+    
+    --popover: #ffffff;
+    --popover-foreground: #330000;
+    
+    /* Maroon Palette */
+    --primary: #800000;
+    --primary-foreground: #ffffff;
+    
+    /* Pink Palette */
+    --secondary: #ffe1e8; 
+    --secondary-foreground: #800000;
+    
+    /* Soft pinks/whites for muted backgrounds */
+    --muted: #fff0f3;
+    --muted-foreground: #80000080; /* 50% opacity maroon */
+    
+    --accent: #ffb3c6;
+    --accent-foreground: #800000;
+    
+    --border: #ffe1e8;
+    --input: #ffe1e8;
+    --ring: #800000;
+  }
+  .dark {
+    /* Base Colors for Dark Mode */
+    --background: #0f0003; /* Almost black with red tint */
+    --foreground: #ffe1e8; /* Soft pinkish white text */
+    
+    --card: #1a0005;
+    --card-foreground: #ffe1e8;
+    
+    --popover: #1a0005;
+    --popover-foreground: #ffe1e8;
+    
+    /* Maroon Palette inverted */
+    --primary: #ff4d4d; /* Bright red/coral for pop */
+    --primary-foreground: #ffffff;
+    
+    /* Pink Palette inverted */
+    --secondary: #400010; /* Dark maroon background */
+    --secondary-foreground: #ffb3c6; /* Bright pink text */
+    
+    /* Soft pinks/whites for muted backgrounds */
+    --muted: #260008;
+    --muted-foreground: #ffb3c680;
+    
+    --accent: #590018;
+    --accent-foreground: #ffffff;
+    
+    --border: #400010;
+    --input: #400010;
+    --ring: #ff4d4d;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-white;
+    /* Seed.com has very smooth scrolling and clean font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight text-primary;
+  }
+  
+  /* Smooth scrolling wrapper utility */
+  .smooth-scroll-container {
+    scroll-behavior: smooth;
+  }
+}
