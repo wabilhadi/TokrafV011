@@ -22,19 +22,31 @@ model User {
 }
 
 model Product {
-  id            String   @id @default(uuid())
+  id            String          @id @default(uuid())
   name          String
-  description   String   @db.Text
+  description   String          @db.Text
   divisi        Divisi
   price         Decimal
-  minOrder      Int      @default(1)
-  status        Status   @default(ACTIVE)
+  minOrder      Int             @default(1)
+  status        Status          @default(ACTIVE)
   images        Image[]
-  imageUrl      String?  @db.Text
-  videoUrl      String?  @db.Text
-  specifications String? @db.Text
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  imageUrl      String?         @db.Text
+  videoUrl      String?         @db.Text
+  specifications String?        @db.Text
+  options       ProductOption[]
+  orderItems    OrderItem[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+// Varian produk (Bahan, Teknik, Finishing, dll) — dikelola admin
+model ProductOption {
+  id        String  @id @default(uuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name      String  // e.g. "Bahan", "Teknik Cetak", "Finishing"
+  values    String  @db.Text // Comma-separated: "Cotton 20s,Cotton 30s,Polyester"
+  required  Boolean @default(true)
 }
 
 model Image {

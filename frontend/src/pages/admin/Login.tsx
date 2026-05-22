@@ -13,17 +13,31 @@ export default function AdminLogin() {
   const navigate = useNavigate();
   const setAuth = useAuthStore(state => state.setAuth);
 
+  const DEMO_EMAIL = 'ekrafhimatika@gmail.com';
+  const DEMO_PASS  = 'EkrafHimaTika_UnUY0';
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-    
+
     try {
       const response = await api.post('/auth/login', { email, password });
       setAuth(response.data.token, response.data.user);
       navigate('/admin/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Login failed. Please check your credentials.');
+      // Offline / demo mode fallback
+      if (email === DEMO_EMAIL && password === DEMO_PASS) {
+        setAuth('demo-token', {
+          id: 'demo',
+          email: DEMO_EMAIL,
+          name: 'Admin TOKRAF',
+          role: 'ADMIN',
+        });
+        navigate('/admin/dashboard');
+        return;
+      }
+      setError(err.response?.data?.error || 'Login gagal. Periksa email & password kamu.');
     } finally {
       setIsLoading(false);
     }
@@ -76,6 +90,13 @@ export default function AdminLogin() {
             {isLoading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
+
+        {/* Dev hint */}
+        <div className="mt-6 p-4 bg-primary/5 border border-primary/20 rounded-xl text-center">
+          <p className="text-xs text-foreground/50 uppercase tracking-widest font-bold mb-1">Demo Credentials</p>
+          <p className="text-sm font-mono text-foreground/70">ekrafhimatika@gmail.com</p>
+          <p className="text-sm font-mono text-foreground/70">EkrafHimaTika_UnUY0</p>
+        </div>
       </div>
     </div>
   );

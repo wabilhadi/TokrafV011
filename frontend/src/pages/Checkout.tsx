@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { MessageCircle, ChevronRight } from 'lucide-react';
 import { useCartStore } from '../store/cartStore';
 
-const TOKRAF_WA = '6281234567890'; // Ganti dengan nomor WA Admin TOKRAF
+const TOKRAF_WA = '6281993294170';
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -18,14 +18,20 @@ export default function Checkout() {
   }
 
   const buildWhatsAppMessage = () => {
-    const itemLines = items.map((item, idx) =>
-      `${idx + 1}. ${item.name} - ${item.quantity} pcs x Rp ${item.price.toLocaleString('id-ID')}`
-    ).join('\n');
+    const itemLines = items.map((item, idx) => {
+      let line = `${idx + 1}. *${item.name}*\n   ${item.quantity} pcs × Rp ${item.price.toLocaleString('id-ID')} = Rp ${(item.price * item.quantity).toLocaleString('id-ID')}`;
+      if (item.customOptions && Object.keys(item.customOptions).length > 0) {
+        const opts = Object.entries(item.customOptions).map(([k, v]) => `${k}: ${v}`).join(', ');
+        line += `\n   📋 ${opts}`;
+      }
+      if (item.customNote) line += `\n   📝 ${item.customNote}`;
+      return line;
+    }).join('\n\n');
 
     const total = getTotalPrice().toLocaleString('id-ID');
 
     const message =
-`Halo Admin TOKRAF! Saya ingin memesan produk berikut:
+`Halo Admin TOKRAF! 👋 Saya ingin memesan produk berikut:
 
 🛒 *DETAIL PESANAN:*
 ${itemLines}
@@ -83,9 +89,17 @@ Mohon informasi ketersediaan, estimasi pengerjaan, dan instruksi pembayarannya y
           <h3 className="font-bold text-lg mb-6">Ringkasan Pesanan</h3>
           <div className="space-y-4">
             {items.map(item => (
-              <div key={item.id} className="flex justify-between text-foreground/80">
-                <span className="flex-1 truncate pr-4">{item.quantity}× {item.name}</span>
-                <span className="font-bold shrink-0">Rp {(item.price * item.quantity).toLocaleString('id-ID')}</span>
+              <div key={item.id} className="py-2 border-b border-border last:border-0">
+                <div className="flex justify-between text-foreground/80">
+                  <span className="flex-1 font-medium pr-4">{item.quantity}× {item.name}</span>
+                  <span className="font-bold shrink-0">Rp {(item.price * item.quantity).toLocaleString('id-ID')}</span>
+                </div>
+                {item.customOptions && Object.keys(item.customOptions).length > 0 && (
+                  <p className="text-xs text-foreground/50 mt-1">
+                    {Object.entries(item.customOptions).map(([k, v]) => `${k}: ${v}`).join(' · ')}
+                  </p>
+                )}
+                {item.customNote && <p className="text-xs text-primary/70 mt-0.5">{item.customNote}</p>}
               </div>
             ))}
           </div>

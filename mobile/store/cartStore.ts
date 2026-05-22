@@ -6,7 +6,9 @@ export interface CartItem {
   name: string;
   price: number;
   quantity: number;
-  imageUrl: string;
+  imageUrl?: string;
+  customOptions?: Record<string, string>; // Dari database options (Bahan, Teknik, dll)
+  customNote?: string;                    // Catatan bebas user
 }
 
 interface CartStore {
@@ -22,27 +24,24 @@ interface CartStore {
 export const useCartStore = create<CartStore>((set, get) => ({
   items: [],
   addItem: (newItem) => set((state) => {
-    const existingItem = state.items.find(item => item.productId === newItem.productId);
-    if (existingItem) {
+    const optionKey = JSON.stringify(newItem.customOptions ?? {});
+    const existing = state.items.find(
+      i => i.productId === newItem.productId && JSON.stringify(i.customOptions ?? {}) === optionKey
+    );
+    if (existing) {
       return {
-        items: state.items.map(item =>
-          item.productId === newItem.productId
-            ? { ...item, quantity: item.quantity + newItem.quantity }
-            : item
+        items: state.items.map(i =>
+          i.id === existing.id ? { ...i, quantity: i.quantity + newItem.quantity } : i
         )
       };
     }
     return { items: [...state.items, { ...newItem, id: Math.random().toString(36).substr(2, 9) }] };
   }),
-  removeItem: (id) => set((state) => ({
-    items: state.items.filter((item) => item.id !== id)
-  })),
+  removeItem: (id) => set((state) => ({ items: state.items.filter(i => i.id !== id) })),
   updateQuantity: (id, quantity) => set((state) => ({
-    items: state.items.map((item) => 
-      item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item
-    )
+    items: state.items.map(i => i.id === id ? { ...i, quantity: Math.max(1, quantity) } : i)
   })),
   clearCart: () => set({ items: [] }),
-  getTotalItems: () => get().items.reduce((total, item) => total + item.quantity, 0),
-  getTotalPrice: () => get().items.reduce((total, item) => total + (item.price * item.quantity), 0),
+  getTotalItems: () => get().items.reduce((total, i) => total + i.quantity, 0),
+  getTotalPrice: () => get().items.reduce((total, i) => total + (i.price * i.quantity), 0),
 }));

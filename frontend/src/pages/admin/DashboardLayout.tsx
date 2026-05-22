@@ -1,5 +1,5 @@
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Package, Image as ImageIcon, LogOut, FileText } from 'lucide-react';
+import { LayoutDashboard, Package, Image as ImageIcon, LogOut, FileText, ArrowLeft } from 'lucide-react';
 import { useEffect } from 'react';
 import { useAuthStore } from '../../store/authStore';
 
@@ -36,7 +36,18 @@ export default function DashboardLayout() {
           </Link>
           <p className="text-xs text-foreground/50 mt-1 uppercase tracking-widest font-bold">Admin Panel</p>
         </div>
-        
+
+        {/* Back to Website */}
+        <div className="px-4 pb-2">
+          <Link
+            to="/"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-foreground/60 hover:text-primary hover:bg-secondary transition-colors"
+          >
+            <ArrowLeft size={16} />
+            Kembali ke Website
+          </Link>
+        </div>
+
         <nav className="flex-1 px-4 space-y-2 mt-4">
           {navItems.map((item) => {
             const isActive = location.pathname.startsWith(item.path);

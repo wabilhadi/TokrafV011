@@ -7,6 +7,8 @@ export interface CartItem {
   price: number;
   quantity: number;
   imageUrl?: string;
+  customOptions?: Record<string, string>; // e.g. { bahan: "Cotton 30s", teknik: "DTF" }
+  customNote?: string;                    // e.g. "Ukuran: S=5, M=10, L=5"
 }
 
 interface CartStore {
@@ -22,11 +24,15 @@ interface CartStore {
 export const useCartStore = create<CartStore>((set, get) => ({
   items: [],
   addItem: (newItem) => set((state) => {
-    const existing = state.items.find(i => i.productId === newItem.productId);
+    // Items with same productId but different options are separate cart entries
+    const optionKey = JSON.stringify(newItem.customOptions ?? {});
+    const existing = state.items.find(
+      i => i.productId === newItem.productId && JSON.stringify(i.customOptions ?? {}) === optionKey
+    );
     if (existing) {
       return {
         items: state.items.map(i =>
-          i.productId === newItem.productId ? { ...i, quantity: i.quantity + newItem.quantity } : i
+          i.id === existing.id ? { ...i, quantity: i.quantity + newItem.quantity } : i
         )
       };
     }
