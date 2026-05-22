@@ -47,14 +47,14 @@ export default function Footer() {
             <Text className="text-background text-lg leading-tight flex-1">Jl. Sudirman No. 123, Jakarta Selatan, 12190</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity onPress={() => Linking.openURL('https://wa.me/6281234567890')} className="flex-row items-center gap-x-4">
+          <TouchableOpacity onPress={() => Linking.openURL('https://wa.me/6281993294170')} className="flex-row items-center gap-x-4">
             <Phone color="#fff" size={20} />
-            <Text className="text-background text-lg">+62 812-3456-7890</Text>
+            <Text className="text-background text-lg">+62 819-9329-4170</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => Linking.openURL('mailto:hello@tokraf.com')} className="flex-row items-center gap-x-4">
+          <TouchableOpacity onPress={() => Linking.openURL('mailto:ekrafhimatika@gmail.com')} className="flex-row items-center gap-x-4">
             <Mail color="#fff" size={20} />
-            <Text className="text-background text-lg">hello@tokraf.com</Text>
+            <Text className="text-background text-lg">ekrafhimatika@gmail.com</Text>
           </TouchableOpacity>
         </View>
       </View>
