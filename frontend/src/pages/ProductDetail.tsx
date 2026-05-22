@@ -29,55 +29,9 @@ function getOptionValues(apiOptions: any[], name: string, fallback: string[]): s
   return found ? found.values.split(',').map((v: string) => v.trim()) : fallback;
 }
 
-// Produk nyata TOKRAF dari katalog (fallback tanpa backend)
-const DUMMY_PRODUCTS: any[] = TOKRAF_PRODUCTS;
-ort { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import api from '../lib/api';
-import { useCartStore } from '../store/cartStore';
-import { ShoppingBag, CheckCircle, Minus, Plus } from 'lucide-react';
-import { TOKRAF_PRODUCTS } from '../lib/products';
+// Produk nyata TOKRAF dari katalog (fallback tanpa backend)
 
-// ─── Default fallbacks (used when DB has no options yet) ────────────────────
-
-const DEFAULT_KONVEKSI = {
-  bahan: ['Cotton Combed 20s', 'Cotton Combed 24s', 'Cotton Combed 30s', 'Polyester', 'Drill', 'Oxford'],
-  teknik: ['Sablon Manual', 'DTF (Direct to Film)', 'Bordir', 'Sublimasi'],
-  ukuran: ['S', 'M', 'L', 'XL', 'XXL', '3XL'],
-};
-
-const DEFAULT_PRINTING = {
-  bahan: ['Flexi Korea', 'Frontlite', 'Albatros', 'Luster', 'Canvas', 'Sticker Vinyl'],
-  finishing: ['Tanpa Finishing', 'Laminasi Doff', 'Laminasi Glossy', 'Mata Ayam', 'Cutting Shape'],
-};
-
-const DEFAULT_MERCH = {
-  teknik: ['Sablon', 'DTF', 'Bordir', 'Laser Engraving', 'UV Printing'],
-};
-
-// Helper: get option values from API or fall back to default
-function getOptionValues(apiOptions: any[], name: string, fallback: string[]): string[] {
-  const found = apiOptions?.find((o: any) => o.name.toLowerCase() === name.toLowerCase());
-  return found ? found.values.split(',').map((v: string) => v.trim()) : fallback;
-}
-
-// ─── Dummy Data ──────────────────────────────────────────────────────────────
-
-const DUMMY_PRODUCTS: any[] = [
-  { id: 'd1', name: 'Premium Oversized Hoodie', price: 250000, divisi: 'KONVEKSI', description: 'High-end heavyweight cotton hoodie with custom embroidery.', minOrder: 12, images: [{ url: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1200' }] },
-  { id: 'd2', name: 'Canvas Totebag Aesthetic', price: 45000, divisi: 'MERCH', description: 'Durable canvas totebag with minimalist screen print.', minOrder: 50, images: [{ url: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200' }] },
-  { id: 'd3', name: 'Art Print Poster A3', price: 20000, divisi: 'DIGITAL_PRINTING', description: 'Gallery-quality fine art printing on textured paper.', minOrder: 10, images: [{ url: 'https://images.unsplash.com/photo-1580136608260-4eb11f4b24fe?q=80&w=1200' }] },
-  { id: 'd4', name: 'Varsity Bomber Jacket', price: 350000, divisi: 'KONVEKSI', description: 'Classic collegiate style bomber jacket with leather sleeves.', minOrder: 12, images: [{ url: 'https://images.unsplash.com/photo-1559551409-dadc959f76b8?q=80&w=1200' }] },
-  { id: 'd5', name: 'Custom Enamel Pins', price: 15000, divisi: 'MERCH', description: 'Hard enamel pins with vibrant colors and metal plating.', minOrder: 100, images: [{ url: 'https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=1200' }] },
-  { id: 'd6', name: 'Standing X-Banner', price: 120000, divisi: 'DIGITAL_PRINTING', description: 'High-res outdoor/indoor banner with aluminum stand.', minOrder: 1, images: [{ url: 'https://images.unsplash.com/photo-1563690623230-0322ba6db7d4?q=80&w=1200' }] },
-  { id: 'd7', name: 'Corporate Polo Shirt', price: 110000, divisi: 'KONVEKSI', description: 'Breathable pique cotton polo with company logo.', minOrder: 24, images: [{ url: 'https://images.unsplash.com/photo-1586363104862-3a5e222ee182?q=80&w=1200' }] },
-  { id: 'd8', name: 'Woven Lanyard', price: 12000, divisi: 'MERCH', description: 'Premium woven polyester lanyard with metal hook.', minOrder: 50, images: [{ url: 'https://images.unsplash.com/photo-1585435422896-e2603fc5c00e?q=80&w=1200' }] },
-  { id: 'd9', name: 'Packaging Box Custom', price: 8000, divisi: 'DIGITAL_PRINTING', description: 'Corrugated boxes with full-color brand printing.', minOrder: 100, images: [{ url: 'https://images.unsplash.com/photo-1605335128031-2945d81cbcc0?q=80&w=1200' }] },
-  { id: 'd10', name: 'Kemeja PDH / Korsa', price: 160000, divisi: 'KONVEKSI', description: 'Durable drill fabric uniform for organizations.', minOrder: 24, images: [{ url: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=1200' }] },
-  { id: 'd11', name: 'Matte Tumbler Flask', price: 75000, divisi: 'MERCH', description: 'Vacuum insulated tumbler with laser engraving.', minOrder: 24, images: [{ url: 'https://images.unsplash.com/photo-1610943640030-22cba2bd11d3?q=80&w=1200' }] },
-  { id: 'd12', name: 'Hardcover Notebook', price: 45000, divisi: 'DIGITAL_PRINTING', description: 'Premium bound notebook with custom cover design.', minOrder: 50, images: [{ url: 'https://images.unsplash.com/photo-1531346878377-a541e4a0ecce?q=80&w=1200' }] },
-];
+const DUMMY_PRODUCTS: any[] = TOKRAF_PRODUCTS;
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
 
@@ -322,7 +276,7 @@ function MerchConfigurator({ product, onAdd }: { product: any; onAdd: () => void
       <div>
         <h3 className="text-xs font-bold uppercase tracking-widest text-primary/60 mb-3">Teknik Produksi</h3>
         <div className="flex flex-wrap gap-2">
-          {MERCH_OPTIONS.teknik.map(t => <OptionPill key={t} label={t} selected={teknik === t} onClick={() => setTeknik(t)} />)}
+          {teknikList.map(t => <OptionPill key={t} label={t} selected={teknik === t} onClick={() => setTeknik(t)} />)}
         </div>
       </div>
       <div>
