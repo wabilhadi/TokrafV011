@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import api from '../lib/api';
 import { useTranslation } from '../hooks/useTranslation';
+import { TOKRAF_PRODUCTS } from '../lib/products';
 
 type Product = {
   id: string;
@@ -14,61 +15,8 @@ type Product = {
   videoUrl?: string | null;
 };
 
-// 12 Premium Dummy Products with Images & Videos
-const DUMMY_PRODUCTS: Product[] = [
-  {
-    id: 'd1', name: 'Premium Oversized Hoodie', basePrice: 250000, category: 'konveksi', description: 'High-end heavyweight cotton hoodie with custom embroidery.',
-    imageUrl: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1200&auto=format&fit=crop',
-    videoUrl: 'https://cdn.pixabay.com/video/2021/08/11/84687-586796328_large.mp4'
-  },
-  {
-    id: 'd2', name: 'Canvas Totebag Aesthetic', basePrice: 45000, category: 'merch', description: 'Durable canvas totebag with minimalist screen print.',
-    imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop'
-  },
-  {
-    id: 'd3', name: 'Art Print Poster A3', basePrice: 20000, category: 'digital-printing', description: 'Gallery-quality fine art printing on textured paper.',
-    imageUrl: 'https://images.unsplash.com/photo-1580136608260-4eb11f4b24fe?q=80&w=1200&auto=format&fit=crop'
-  },
-  {
-    id: 'd4', name: 'Varsity Bomber Jacket', basePrice: 350000, category: 'konveksi', description: 'Classic collegiate style bomber jacket with leather sleeves.',
-    imageUrl: 'https://images.unsplash.com/photo-1559551409-dadc959f76b8?q=80&w=1200&auto=format&fit=crop',
-    videoUrl: 'https://cdn.pixabay.com/video/2020/05/25/40141-424855421_large.mp4'
-  },
-  {
-    id: 'd5', name: 'Custom Enamel Pins', basePrice: 15000, category: 'merch', description: 'Hard enamel pins with vibrant colors and metal plating.',
-    imageUrl: 'https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=1200&auto=format&fit=crop'
-  },
-  {
-    id: 'd6', name: 'Standing X-Banner', basePrice: 120000, category: 'digital-printing', description: 'High-res outdoor/indoor banner with aluminum stand.',
-    imageUrl: 'https://images.unsplash.com/photo-1563690623230-0322ba6db7d4?q=80&w=1200&auto=format&fit=crop'
-  },
-  {
-    id: 'd7', name: 'Corporate Polo Shirt', basePrice: 110000, category: 'konveksi', description: 'Breathable pique cotton polo with company logo.',
-    imageUrl: 'https://images.unsplash.com/photo-1586363104862-3a5e222ee182?q=80&w=1200&auto=format&fit=crop'
-  },
-  {
-    id: 'd8', name: 'Woven Lanyard', basePrice: 12000, category: 'merch', description: 'Premium woven polyester lanyard with metal hook.',
-    imageUrl: 'https://images.unsplash.com/photo-1585435422896-e2603fc5c00e?q=80&w=1200&auto=format&fit=crop',
-    videoUrl: 'https://cdn.pixabay.com/video/2021/04/13/70977-536968038_large.mp4'
-  },
-  {
-    id: 'd9', name: 'Packaging Box Custom', basePrice: 8000, category: 'digital-printing', description: 'Corrugated boxes with full-color brand printing.',
-    imageUrl: 'https://images.unsplash.com/photo-1605335128031-2945d81cbcc0?q=80&w=1200&auto=format&fit=crop'
-  },
-  {
-    id: 'd10', name: 'Kemeja PDH / Korsa', basePrice: 160000, category: 'konveksi', description: 'Durable drill fabric uniform for organizations.',
-    imageUrl: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=1200&auto=format&fit=crop'
-  },
-  {
-    id: 'd11', name: 'Matte Tumbler Flask', basePrice: 75000, category: 'merch', description: 'Vacuum insulated tumbler with laser engraving.',
-    imageUrl: 'https://images.unsplash.com/photo-1610943640030-22cba2bd11d3?q=80&w=1200&auto=format&fit=crop',
-    videoUrl: 'https://cdn.pixabay.com/video/2022/10/30/137081-766708605_large.mp4'
-  },
-  {
-    id: 'd12', name: 'Hardcover Notebook', basePrice: 45000, category: 'digital-printing', description: 'Premium bound notebook with custom cover design.',
-    imageUrl: 'https://images.unsplash.com/photo-1531346878377-a541e4a0ecce?q=80&w=1200&auto=format&fit=crop'
-  }
-];
+// Gunakan TOKRAF_PRODUCTS sebagai fallback dummy
+const DUMMY_PRODUCTS = TOKRAF_PRODUCTS;
 
 export default function Layanan() {
   const { divisi } = useParams<{ divisi?: string }>();

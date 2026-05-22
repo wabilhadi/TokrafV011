@@ -4,6 +4,40 @@ import { useState, useEffect } from 'react';
 import api from '../lib/api';
 import { useCartStore } from '../store/cartStore';
 import { ShoppingBag, CheckCircle, Minus, Plus } from 'lucide-react';
+import { TOKRAF_PRODUCTS } from '../lib/products';
+
+// ─── Default fallbacks (used when DB has no options yet) ────────────────────
+
+const DEFAULT_KONVEKSI = {
+  bahan: ['Cotton Combed 20s', 'Cotton Combed 24s', 'Cotton Combed 30s', 'Polyester', 'Drill', 'Oxford'],
+  teknik: ['Sablon Manual', 'DTF (Direct to Film)', 'Bordir', 'Sublimasi'],
+  ukuran: ['S', 'M', 'L', 'XL', 'XXL', '3XL'],
+};
+
+const DEFAULT_PRINTING = {
+  bahan: ['Flexi Korea', 'Frontlite', 'Albatros', 'Luster', 'Canvas', 'Sticker Vinyl'],
+  finishing: ['Tanpa Finishing', 'Laminasi Doff', 'Laminasi Glossy', 'Mata Ayam', 'Cutting Shape'],
+};
+
+const DEFAULT_MERCH = {
+  teknik: ['Sablon', 'DTF', 'Bordir', 'Laser Engraving', 'UV Printing'],
+};
+
+// Helper: get option values from API or fall back to default
+function getOptionValues(apiOptions: any[], name: string, fallback: string[]): string[] {
+  const found = apiOptions?.find((o: any) => o.name.toLowerCase() === name.toLowerCase());
+  return found ? found.values.split(',').map((v: string) => v.trim()) : fallback;
+}
+
+// Produk nyata TOKRAF dari katalog (fallback tanpa backend)
+const DUMMY_PRODUCTS: any[] = TOKRAF_PRODUCTS;
+ort { useParams, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import api from '../lib/api';
+import { useCartStore } from '../store/cartStore';
+import { ShoppingBag, CheckCircle, Minus, Plus } from 'lucide-react';
+import { TOKRAF_PRODUCTS } from '../lib/products';
 
 // ─── Default fallbacks (used when DB has no options yet) ────────────────────
 

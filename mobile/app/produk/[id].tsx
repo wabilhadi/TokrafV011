@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { TOKRAF_PRODUCTS } from '../../lib/products';
 import {
   View, Text, ScrollView, Image, TouchableOpacity,
   TextInput, Alert, ActivityIndicator
@@ -10,21 +11,7 @@ import Animated, { FadeInUp } from 'react-native-reanimated';
 import { ArrowLeft, Minus, Plus, ShoppingBag, CheckCircle, MessageCircle } from 'lucide-react-native';
 import { useCartStore } from '../../store/cartStore';
 
-// ─── Dummy product catalog ───────────────────────────────────────────────────
-const DUMMY_PRODUCTS: any[] = [
-  { id: 'd1', name: 'Premium Oversized Hoodie', price: 250000, divisi: 'KONVEKSI', description: 'High-end heavyweight cotton hoodie with custom embroidery.', minOrder: 12, imageUrl: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800' },
-  { id: 'd2', name: 'Canvas Totebag Aesthetic', price: 45000, divisi: 'MERCH', description: 'Durable canvas totebag with minimalist screen print.', minOrder: 50, imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800' },
-  { id: 'd3', name: 'Art Print Poster A3', price: 20000, divisi: 'DIGITAL_PRINTING', description: 'Gallery-quality fine art printing on textured paper.', minOrder: 10, imageUrl: 'https://images.unsplash.com/photo-1580136608260-4eb11f4b24fe?q=80&w=800' },
-  { id: 'd4', name: 'Varsity Bomber Jacket', price: 350000, divisi: 'KONVEKSI', description: 'Classic collegiate style bomber jacket.', minOrder: 12, imageUrl: 'https://images.unsplash.com/photo-1559551409-dadc959f76b8?q=80&w=800' },
-  { id: 'd5', name: 'Custom Enamel Pins', price: 15000, divisi: 'MERCH', description: 'Hard enamel pins with vibrant colors.', minOrder: 100, imageUrl: 'https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=800' },
-  { id: 'd6', name: 'Standing X-Banner', price: 120000, divisi: 'DIGITAL_PRINTING', description: 'High-res outdoor/indoor banner with aluminum stand.', minOrder: 1, imageUrl: 'https://images.unsplash.com/photo-1563690623230-0322ba6db7d4?q=80&w=800' },
-  { id: 'd7', name: 'Corporate Polo Shirt', price: 110000, divisi: 'KONVEKSI', description: 'Breathable pique cotton polo.', minOrder: 24, imageUrl: 'https://images.unsplash.com/photo-1586363104862-3a5e222ee182?q=80&w=800' },
-  { id: 'd8', name: 'Woven Lanyard', price: 12000, divisi: 'MERCH', description: 'Premium woven polyester lanyard.', minOrder: 50, imageUrl: 'https://images.unsplash.com/photo-1585435422896-e2603fc5c00e?q=80&w=800' },
-  { id: 'd9', name: 'Packaging Box Custom', price: 8000, divisi: 'DIGITAL_PRINTING', description: 'Corrugated boxes with full-color printing.', minOrder: 100, imageUrl: 'https://images.unsplash.com/photo-1605335128031-2945d81cbcc0?q=80&w=800' },
-  { id: 'd10', name: 'Kemeja PDH / Korsa', price: 160000, divisi: 'KONVEKSI', description: 'Durable drill fabric uniform.', minOrder: 24, imageUrl: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=800' },
-  { id: 'd11', name: 'Matte Tumbler Flask', price: 75000, divisi: 'MERCH', description: 'Vacuum insulated tumbler with laser engraving.', minOrder: 24, imageUrl: 'https://images.unsplash.com/photo-1610943640030-22cba2bd11d3?q=80&w=800' },
-  { id: 'd12', name: 'Hardcover Notebook', price: 45000, divisi: 'DIGITAL_PRINTING', description: 'Premium bound notebook with custom cover.', minOrder: 50, imageUrl: 'https://images.unsplash.com/photo-1531346878377-a541e4a0ecce?q=80&w=800' },
-];
+const DUMMY_PRODUCTS: any[] = TOKRAF_PRODUCTS;
 
 // ─── Option configs ──────────────────────────────────────────────────────────
 const KONVEKSI_BAHAN = ['Cotton 20s', 'Cotton 24s', 'Cotton 30s', 'Polyester', 'Drill'];
