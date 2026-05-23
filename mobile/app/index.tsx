@@ -22,19 +22,19 @@ const BESTSELLERS = [
 // ─── Divisions ────────────────────────────────────────────────────────────────
 const DIVISIONS = [
   {
-    num: '01', key: 'konveksi', href: '/layanan/konveksi',
+    num: '01', key: 'konveksi', href: '/layanan?divisi=konveksi',
     title: 'Tokraf\nKonveksi.',
     desc: 'Kaos, jaket, hoodie, polo, jersey — produksi custom berkualitas tinggi.',
     image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800',
   },
   {
-    num: '02', key: 'merch', href: '/layanan/merch',
+    num: '02', key: 'merch', href: '/layanan?divisi=merch',
     title: 'Tokraf\nMerch.',
     desc: 'Lanyard, mug, tumbler, ganci, ID card — merchandise event profesional.',
     image: 'https://images.unsplash.com/photo-1610943640030-22cba2bd11d3?q=80&w=800',
   },
   {
-    num: '03', key: 'printing', href: '/layanan/digital-printing',
+    num: '03', key: 'printing', href: '/layanan?divisi=digital-printing',
     title: 'Tokraf\nPrint.',
     desc: 'Banner, spanduk, sticker, kartu nama — cetak berkualitas ekspor.',
     image: 'https://images.unsplash.com/photo-1563690623230-0322ba6db7d4?q=80&w=800',
