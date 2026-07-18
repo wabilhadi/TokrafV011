@@ -23,7 +23,7 @@ const MOCK_PORTFOLIO: Portfolio[] = [
   { id: '6', title: 'Buku Panduan', divisi: 'DIGITAL_PRINTING', images: [{ url: 'https://placehold.co/800x600/ffe1e8/800000/png?text=Buku' }] },
 ];
 
-const BACKEND_URL = `http://${window.location.hostname}:5000`;
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'https://tokraf-backend.vercel.app';
 
 export default function Portofolio() {
   const [activeTab, setActiveTab] = useState('all');

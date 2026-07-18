@@ -60,7 +60,7 @@ function ProductCard({ product, index }: { product: any; index: number }) {
         <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-secondary/30 mb-4 shadow-sm group-hover:shadow-xl transition-all duration-500">
           {product.imageUrl ? (
             <motion.img
-              src={product.imageUrl.startsWith('http') ? product.imageUrl : `http://localhost:5000${product.imageUrl}`}
+              src={product.imageUrl.startsWith('http') ? product.imageUrl : `https://tokraf-backend.vercel.app${product.imageUrl}`}
               alt={product.name}
               className="absolute inset-0 w-full h-full object-contain p-2"
               animate={{ scale: hovered ? 1.05 : 1 }}
@@ -186,7 +186,7 @@ export default function Home() {
   const [recommended, setRecommended] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/products')
+    fetch('https://tokraf-backend.vercel.app/api/products')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
 const api = axios.create({
-  baseURL: `http://${window.location.hostname}:5000/api`,
+  baseURL: import.meta.env.VITE_API_URL || 'https://tokraf-backend.vercel.app/api',
   headers: {
     'Content-Type': 'application/json',
   },

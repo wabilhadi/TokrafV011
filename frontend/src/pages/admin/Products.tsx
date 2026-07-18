@@ -26,7 +26,7 @@ const emptyForm = {
   specifications: '', isRecommended: false, options: [] as { name: string; uiType: string; choices: {label: string, priceMod: number, metadata?: string}[]; required: boolean }[],
 };
 
-const BACKEND_URL = `http://${window.location.hostname}:5000`;
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'https://tokraf-backend.vercel.app';
 
 export default function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([]);

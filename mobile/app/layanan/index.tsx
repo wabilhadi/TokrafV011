@@ -32,7 +32,7 @@ export default function Layanan() {
   const searchRef = useRef<TextInput>(null);
 
   React.useEffect(() => {
-    const apiUrl = process.env.EXPO_PUBLIC_API_URL || 'http://192.168.1.46:5000';
+    const apiUrl = process.env.EXPO_PUBLIC_API_URL || 'https://tokraf-backend.vercel.app';
     setLoading(true);
     const url = searchQuery.trim()
       ? `${apiUrl}/api/products?search=${encodeURIComponent(searchQuery.trim())}`

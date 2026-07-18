@@ -118,7 +118,7 @@ export default function Cart() {
                       <div className="w-full sm:w-32 h-32 rounded-2xl overflow-hidden bg-secondary shrink-0 border border-border">
                         {item.imageUrl && (
                           <img 
-                            src={item.imageUrl.startsWith('http') ? item.imageUrl : `http://localhost:5000${item.imageUrl}`} 
+                            src={item.imageUrl.startsWith('http') ? item.imageUrl : `https://tokraf-backend.vercel.app${item.imageUrl}`} 
                             alt={item.name} 
                             className="w-full h-full object-contain p-2 mix-blend-multiply" 
                           />

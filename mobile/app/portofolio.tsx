@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
 import axios from 'axios';
 
-const BACKEND_URL = process.env.EXPO_PUBLIC_API_URL || 'http://192.168.1.46:5000';
+const BACKEND_URL = process.env.EXPO_PUBLIC_API_URL || 'https://tokraf-backend.vercel.app';
 const API_URL = `${BACKEND_URL}/api`;
 
 type Portfolio = {

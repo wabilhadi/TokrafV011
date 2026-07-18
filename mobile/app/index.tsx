@@ -146,7 +146,7 @@ export default function Home() {
   };
 
   React.useEffect(() => {
-    const apiUrl = process.env.EXPO_PUBLIC_API_URL || 'http://192.168.1.46:5000';
+    const apiUrl = process.env.EXPO_PUBLIC_API_URL || 'https://tokraf-backend.vercel.app';
     fetch(`${apiUrl}/api/products`)
       .then(res => res.json())
       .then(data => {

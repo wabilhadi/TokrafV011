@@ -108,7 +108,7 @@ function ProductReviews({ productId }: { productId: string }) {
               </div>
               <p className="text-foreground/80 mb-3">{rev.comment}</p>
               {rev.mediaUrl && (
-                <img src={`http://localhost:5000${rev.mediaUrl}`} alt="Review media" className="h-32 rounded-lg object-cover" />
+                <img src={`https://tokraf-backend.vercel.app${rev.mediaUrl}`} alt="Review media" className="h-32 rounded-lg object-cover" />
               )}
             </div>
           ))
@@ -496,9 +496,9 @@ export default function ProductDetail() {
 
   const images = [];
   if (product.images?.length > 0) {
-    images.push(...product.images.map((i: any) => i.url.startsWith('http') ? i.url : `http://localhost:5000${i.url}`));
+    images.push(...product.images.map((i: any) => i.url.startsWith('http') ? i.url : `https://tokraf-backend.vercel.app${i.url}`));
   } else if (product.imageUrl) {
-    images.push(product.imageUrl.startsWith('http') ? product.imageUrl : `http://localhost:5000${product.imageUrl}`);
+    images.push(product.imageUrl.startsWith('http') ? product.imageUrl : `https://tokraf-backend.vercel.app${product.imageUrl}`);
   } else {
     images.push(`https://placehold.co/1000x1200/ffe1e8/800000?text=${encodeURIComponent(product.name)}`);
   }

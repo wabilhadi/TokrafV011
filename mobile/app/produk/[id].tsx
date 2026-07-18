@@ -13,7 +13,7 @@ import axios from 'axios';
 import { calculateBaseUnitPrice, calculateItemSubtotal } from '../../lib/pricingEngine';
 
 const TOKRAF_WA = '6281993294170';
-const BACKEND_URL = process.env.EXPO_PUBLIC_API_URL || 'http://192.168.1.46:5000';
+const BACKEND_URL = process.env.EXPO_PUBLIC_API_URL || 'https://tokraf-backend.vercel.app';
 const API_URL = `${BACKEND_URL}/api`;
 
 // ─── SPEC DICTIONARY ────────────────────────────────────────────────────────────

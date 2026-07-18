@@ -174,7 +174,7 @@ function ProductCard({ product, idx, tabs }: { product: Product, idx: number, ta
           {/* Fallback Image */}
           {product.imageUrl ? (
             <motion.img 
-              src={product.imageUrl.startsWith('http') ? product.imageUrl : `http://localhost:5000${product.imageUrl}`} 
+              src={product.imageUrl.startsWith('http') ? product.imageUrl : `https://tokraf-backend.vercel.app${product.imageUrl}`} 
               alt={product.name} 
               className="absolute inset-0 w-full h-full object-cover"
               animate={{ scale: isHovered ? 1.05 : 1 }}
