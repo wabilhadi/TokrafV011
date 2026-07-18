@@ -26,17 +26,7 @@ export default function AdminLogin() {
       setAuth(response.data.token, response.data.user);
       navigate('/admin/dashboard');
     } catch (err: any) {
-      // Offline / demo mode fallback
-      if (email === DEMO_EMAIL && password === DEMO_PASS) {
-        setAuth('demo-token', {
-          id: 'demo',
-          email: DEMO_EMAIL,
-          name: 'Admin TOKRAF',
-          role: 'ADMIN',
-        });
-        navigate('/admin/dashboard');
-        return;
-      }
+
       setError(err.response?.data?.error || 'Login gagal. Periksa email & password kamu.');
     } finally {
       setIsLoading(false);

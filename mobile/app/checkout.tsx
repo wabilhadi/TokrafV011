@@ -7,6 +7,7 @@ import Animated, { FadeInUp } from 'react-native-reanimated';
 import { MessageCircle } from 'lucide-react-native';
 import { useCartStore } from '../store/cartStore';
 import { useAuthStore } from '../store/authStore';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const TOKRAF_WA = '6281993294170';
 
@@ -16,6 +17,7 @@ export default function Checkout() {
   const { isAuthenticated, user } = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
   const [guestName, setGuestName] = useState('');
+  const insets = useSafeAreaInsets();
 
   if (items.length === 0) {
     return (
@@ -140,12 +142,9 @@ Mohon info ketersediaan, estimasi, dan cara pembayarannya ya. Terima kasih! 🙏
                 placeholder="Masukkan nama Anda"
                 value={guestName}
                 onChangeText={setGuestName}
-                className="bg-secondary border border-border rounded-2xl px-5 py-4 text-foreground text-base mb-3"
+                className="bg-secondary border border-border rounded-2xl px-5 py-4 text-foreground text-base"
                 placeholderTextColor="#999"
               />
-              <TouchableOpacity onPress={() => router.push('/login')} className="bg-background border border-primary rounded-2xl py-3 items-center">
-                <Text className="text-primary font-bold text-sm">Punya akun? Login sekarang</Text>
-              </TouchableOpacity>
             </View>
           )}
         </Animated.View>
@@ -161,7 +160,10 @@ Mohon info ketersediaan, estimasi, dan cara pembayarannya ya. Terima kasih! 🙏
       </ScrollView>
 
       {/* Floating CTA */}
-      <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-border p-5 pb-8 shadow-2xl">
+      <View 
+        className="absolute bottom-0 left-0 right-0 bg-white border-t border-border p-5 shadow-2xl"
+        style={{ paddingBottom: Math.max(insets.bottom, 20) }}
+      >
         <TouchableOpacity
           onPress={handleCheckout}
           disabled={isLoading}

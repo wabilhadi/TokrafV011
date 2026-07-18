@@ -42,7 +42,7 @@ export default function Cart() {
               >
                 {/* Product image */}
                 <Image
-                  source={{ uri: item.imageUrl || 'https://placehold.co/200x200/ffe1e8/800000' }}
+                  source={{ uri: item.imageUrl?.startsWith('http') ? item.imageUrl : item.imageUrl ? `${process.env.EXPO_PUBLIC_API_URL}${item.imageUrl}` : 'https://placehold.co/200x200/ffe1e8/800000' }}
                   className="w-24 h-28 rounded-2xl bg-secondary"
                   resizeMode="cover"
                 />

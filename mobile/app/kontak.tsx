@@ -10,13 +10,13 @@ export default function Kontak() {
     <View className="flex-1 bg-background">
       <Navbar />
       <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 100, paddingTop: 100 }}>
-        
+
         <View className="px-6 mb-12">
           <Animated.Text entering={FadeInUp.duration(600)} className="text-6xl font-extrabold tracking-tighter text-foreground mb-4">
             Kontak.
           </Animated.Text>
           <Animated.Text entering={FadeInUp.delay(100).duration(600)} className="text-xl font-light text-foreground/70">
-            Let's discuss your next big project.
+            Punya pertanyaan atau ingin memulai proyek bersama? Tim kami siap membantu Anda kapan saja.
           </Animated.Text>
         </View>
 
@@ -27,7 +27,7 @@ export default function Kontak() {
             </View>
             <View>
               <Text className="text-sm font-bold text-foreground/50 uppercase tracking-widest mb-1">WhatsApp</Text>
-              <Text className="text-xl font-bold text-foreground">+62 812-3456-7890</Text>
+              <Text className="text-xl font-bold text-foreground">+62 819-9329-4170</Text>
             </View>
           </Animated.View>
 
@@ -37,7 +37,7 @@ export default function Kontak() {
             </View>
             <View>
               <Text className="text-sm font-bold text-foreground/50 uppercase tracking-widest mb-1">Email</Text>
-              <Text className="text-xl font-bold text-foreground">hello@tokraf.com</Text>
+              <Text className="text-xl font-bold text-foreground">ekrafhimatika@gmail.com</Text>
             </View>
           </Animated.View>
 
@@ -47,16 +47,16 @@ export default function Kontak() {
             </View>
             <View className="flex-1">
               <Text className="text-sm font-bold text-foreground/50 uppercase tracking-widest mb-1">Office</Text>
-              <Text className="text-xl font-bold text-foreground leading-tight">Jl. Sudirman No. 123, Jakarta Selatan, 12190</Text>
+              <Text className="text-xl font-bold text-foreground leading-tight">UNU Yogyakarta Campus, Jl. Ringroad Barat, Dowangan, Banyuraden Kec. Gamping, Kabupaten Sleman Daerah Istimewa Yogyakarta 55293</Text>
             </View>
           </Animated.View>
 
           <Animated.View entering={FadeInUp.delay(500).duration(600)} className="mt-8">
-            <TouchableOpacity 
-              onPress={() => Linking.openURL('https://wa.me/6281234567890')}
+            <TouchableOpacity
+              onPress={() => Linking.openURL('https://wa.me/6281993294170')}
               className="w-full bg-foreground py-5 rounded-full items-center shadow-lg"
             >
-              <Text className="text-background font-bold text-lg tracking-widest">SEND MESSAGE</Text>
+              <Text className="text-background font-bold text-lg tracking-widest">KIRIM PESAN</Text>
             </TouchableOpacity>
           </Animated.View>
         </View>

@@ -1,27 +1,63 @@
-import React from 'react';
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import Animated, { FadeInUp } from 'react-native-reanimated';
+import Animated, { FadeInUp, FadeOutDown } from 'react-native-reanimated';
+import axios from 'axios';
 
-const PORTFOLIO = [
-  { id: 1, category: 'Konveksi', title: 'Seragam Korsa HMJ 2024', desc: '200 pcs kemeja PDH American Drill bordir 5 titik untuk Himpunan Mahasiswa Jurusan.', image: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=1200' },
-  { id: 2, category: 'Merch', title: 'Goodie Bag Tech Summit', desc: 'Paket merchandise event: totebag, tumbler, lanyard, dan sticker custom 500 pcs.', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200' },
-  { id: 3, category: 'Digital Printing', title: 'Dekorasi Pameran UMKM', desc: 'X-Banner, backdrop, dan banner outdoor untuk 12 booth peserta pameran.', image: 'https://images.unsplash.com/photo-1563690623230-0322ba6db7d4?q=80&w=1200' },
-  { id: 4, category: 'Konveksi', title: 'Jersey Futsal Liga Kampus', desc: '16 tim × 15 pcs jersey full printing drifit Milano untuk turnamen antar kampus.', image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1200' },
-  { id: 5, category: 'Merch', title: 'Souvenir Wisuda 2024', desc: 'Mug sublimasi + lanyard ID card untuk 300 wisudawan Universitas.', image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=1200' },
-  { id: 6, category: 'Konveksi', title: 'Hoodie Brand Streetwear', desc: 'Kolaborasi produksi 150 pcs hoodie oversize fleece cotton untuk brand lokal.', image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1200' },
-];
+const BACKEND_URL = process.env.EXPO_PUBLIC_API_URL || 'http://192.168.1.46:5000';
+const API_URL = `${BACKEND_URL}/api`;
+
+type Portfolio = {
+  id: string;
+  title: string;
+  clientName?: string;
+  divisi: string;
+  images: { url: string }[];
+};
 
 const CATEGORY_COLOR: Record<string, string> = {
-  'Konveksi': 'bg-primary/10',
-  'Merch': 'bg-blue-50',
-  'Digital Printing': 'bg-green-50',
+  'KONVEKSI': 'bg-primary/10',
+  'MERCH': 'bg-blue-50',
+  'DIGITAL_PRINTING': 'bg-green-50',
 };
+
+const TABS = [
+  { id: 'all', label: 'Semua Karya' },
+  { id: 'KONVEKSI', label: 'Konveksi' },
+  { id: 'MERCH', label: 'Merchandise' },
+  { id: 'DIGITAL_PRINTING', label: 'Printing' },
+];
 
 export default function Portofolio() {
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState('all');
+  const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios.get(`${API_URL}/portfolio`)
+      .then(res => {
+        if (res.data && res.data.length > 0) {
+          setPortfolios(res.data);
+        } else {
+          setPortfolios([]);
+        }
+      })
+      .catch(err => {
+        console.error('Error fetching portfolio:', err);
+        setPortfolios([]);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filtered = activeTab === 'all' ? portfolios : portfolios.filter(p => p.divisi === activeTab);
+
+  const resolveUrl = (url?: string) => {
+    if (!url) return '';
+    return url.startsWith('http') ? url : `${BACKEND_URL}${url}`;
+  };
 
   return (
     <View className="flex-1 bg-background">
@@ -38,11 +74,11 @@ export default function Portofolio() {
         </View>
 
         {/* Stats row */}
-        <Animated.View entering={FadeInUp.delay(150)} className="flex-row px-6 gap-x-4 mb-10">
+        <Animated.View entering={FadeInUp.delay(150)} className="flex-row px-6 gap-x-4 mb-8">
           {[
-            { val: '500+', label: 'Klien' },
+            { val: '100+', label: 'Klien' },
             { val: '3 Divisi', label: 'Layanan' },
-            { val: '2018', label: 'Berdiri' },
+            { val: '2026', label: 'Berdiri' },
           ].map(s => (
             <View key={s.label} className="flex-1 bg-primary/5 rounded-2xl p-4 items-center">
               <Text className="text-2xl font-extrabold text-primary">{s.val}</Text>
@@ -51,22 +87,52 @@ export default function Portofolio() {
           ))}
         </Animated.View>
 
+        {/* Filter Tabs */}
+        <Animated.View entering={FadeInUp.delay(200)} className="mb-6">
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 24, gap: 10 }}>
+            {TABS.map(tab => (
+              <TouchableOpacity
+                key={tab.id}
+                onPress={() => setActiveTab(tab.id)}
+                className={`px-5 py-3 rounded-full border-2 ${activeTab === tab.id ? 'bg-foreground border-foreground' : 'bg-transparent border-border'
+                  }`}
+              >
+                <Text className={`font-bold ${activeTab === tab.id ? 'text-background' : 'text-foreground'}`}>
+                  {tab.label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </Animated.View>
+
         {/* Portfolio grid */}
-        <View className="px-4 gap-y-6">
-          {PORTFOLIO.map((work, index) => (
-            <Animated.View key={work.id} entering={FadeInUp.delay(200 + index * 80).duration(500)}>
-              <View className="w-full aspect-[4/3] bg-secondary rounded-3xl overflow-hidden mb-3">
-                <Image source={{ uri: work.image }} className="w-full h-full" resizeMode="cover" />
-                <View className={`absolute top-4 left-4 ${CATEGORY_COLOR[work.category] ?? 'bg-white/80'} px-3 py-1 rounded-full border border-white/30`}>
-                  <Text className="text-xs font-bold text-foreground/70">{work.category}</Text>
-                </View>
-              </View>
-              <View className="px-2">
-                <Text className="text-xl font-bold text-foreground mb-1">{work.title}</Text>
-                <Text className="text-sm text-foreground/60 leading-relaxed">{work.desc}</Text>
-              </View>
+        <View className="px-4 flex-row flex-wrap justify-between gap-y-6 min-h-[300px]">
+          {loading ? (
+            <View className="w-full items-center justify-center py-20">
+              <ActivityIndicator size="large" color="#800000" />
+            </View>
+          ) : filtered.length === 0 ? (
+            <Animated.View entering={FadeInUp} className="w-full items-center justify-center py-10 bg-secondary rounded-3xl mx-2">
+              <Text className="text-foreground/60 font-bold text-center">Belum ada karya di kategori ini.</Text>
             </Animated.View>
-          ))}
+          ) : (
+            filtered.map((work, index) => (
+              <Animated.View key={work.id} style={{ width: '48%' }} entering={FadeInUp.delay(100 + (index % 5) * 80).duration(400)} exiting={FadeOutDown}>
+                <View className="w-full aspect-square bg-secondary rounded-3xl overflow-hidden mb-2">
+                  <Image source={{ uri: resolveUrl(work.images?.[0]?.url) }} className="w-full h-full" resizeMode="cover" />
+                  <View className={`absolute top-2 left-2 ${CATEGORY_COLOR[work.divisi] ?? 'bg-white/90'} px-2 py-0.5 rounded-full border border-black/10`}>
+                    <Text className="text-[9px] font-bold text-foreground/80">{work.divisi.replace('_', ' ')}</Text>
+                  </View>
+                </View>
+                <View className="px-1">
+                  <Text className="text-sm font-bold text-foreground mb-0.5" numberOfLines={2}>{work.title}</Text>
+                  {work.clientName && (
+                    <Text className="text-[10px] text-foreground/60 leading-relaxed font-bold" numberOfLines={1}>{work.clientName}</Text>
+                  )}
+                </View>
+              </Animated.View>
+            ))
+          )}
         </View>
 
         {/* CTA */}

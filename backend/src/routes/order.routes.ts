@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import { createCheckoutOrder } from '../controllers/order.controller';
+import { createOrder, getOrders } from '../controllers/order.controller';
+import { authenticateJWT } from '../middleware/auth.middleware';
 
 const router = Router();
 
-// POST /api/orders/checkout
-router.post('/checkout', createCheckoutOrder);
+router.post('/', createOrder);
+router.get('/', authenticateJWT, getOrders);
 
 export default router;

@@ -9,53 +9,58 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  name      String
-  role      String   @default("USER") // "ADMIN" or "USER"
-  whatsapp  String?  @unique
-  address   String?  @db.Text
-  orders    Order[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                  String    @id @default(uuid())
+  email               String    @unique
+  password            String
+  name                String
+  role                String    @default("USER") // "ADMIN" or "USER"
+  whatsapp            String?   @unique
+  address             String?   @db.Text
+  isVerified          Boolean   @default(false)
+  verificationToken   String?
+  verificationExpiry  DateTime?
+  orders              Order[]
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 }
 
 model Product {
-  id            String          @id @default(uuid())
-  name          String
-  description   String          @db.Text
-  divisi        Divisi
-  price         Decimal
-  minOrder      Int             @default(1)
-  status        Status          @default(ACTIVE)
-  images        Image[]
-  imageUrl      String?         @db.Text
-  videoUrl      String?         @db.Text
-  specifications String?        @db.Text
-  options       ProductOption[]
-  orderItems    OrderItem[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  id             String          @id @default(uuid())
+  name           String
+  description    String          @db.Text
+  divisi         Divisi
+  price          Decimal
+  minOrder       Int             @default(1)
+  status         Status          @default(ACTIVE)
+  images         Image[]
+  imageUrl       String?         @db.Text
+  videoUrl       String?         @db.Text
+  specifications String?         @db.Text
+  options        ProductOption[]
+  orderItems     OrderItem[]
+  reviews        Review[]
+  isRecommended  Boolean         @default(false)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 }
 
-// Varian produk (Bahan, Teknik, Finishing, dll) — dikelola admin
+// Varian produk (Bahan, Teknik, Finishing, dll)  dikelola admin
 model ProductOption {
   id        String  @id @default(uuid())
   productId String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  name      String  // e.g. "Bahan", "Teknik Cetak", "Finishing"
+  name      String // e.g. "Bahan", "Teknik Cetak", "Finishing"
   values    String  @db.Text // Comma-separated: "Cotton 20s,Cotton 30s,Polyester"
   required  Boolean @default(true)
 }
 
 model Image {
-  id        String   @id @default(uuid())
-  url       String
-  productId String?
-  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id          String     @id @default(uuid())
+  url         String
+  productId   String?
+  product     Product?   @relation(fields: [productId], references: [id], onDelete: Cascade)
   portfolioId String?
-  portfolio Portfolio? @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  portfolio   Portfolio? @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
 }
 
 model Portfolio {
@@ -74,6 +79,15 @@ model Content {
   key       String   @unique // e.g. "HERO_TEXT", "ABOUT_TEXT", "WA_NUMBER"
   value     String   @db.Text
   updatedAt DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
 }
 
 enum Divisi {
@@ -115,4 +129,15 @@ enum OrderStatus {
   SHIPPED
   COMPLETED
   CANCELLED
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name      String
+  rating    Int      @default(5)
+  comment   String   @db.Text
+  mediaUrl  String?  @db.Text
+  createdAt DateTime @default(now())
 }

@@ -20,7 +20,7 @@ export default function Tentang() {
           <motion.h1 
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-6xl md:text-[8rem] font-extrabold font-heading text-white tracking-tighter leading-none"
+            className="text-4xl md:text-7xl font-extrabold font-heading text-white tracking-tighter leading-tight"
           >
             {t('tentang.ourStory')}
           </motion.h1>
@@ -39,7 +39,7 @@ export default function Tentang() {
             transition={{ duration: 0.8 }}
             className="space-y-8"
           >
-            <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground leading-tight">
+            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground leading-tight">
               {t('tentang.heading')}
             </h2>
             <p className="text-2xl font-light text-foreground/80 leading-relaxed">
@@ -83,6 +83,40 @@ export default function Tentang() {
         </div>
 
       </div>
+
+      {/* ── WHY US (Standar Kualitas) dipindah dari Home ── */}
+      <section className="py-16 bg-foreground text-background rounded-[2rem] mx-4 my-8 shadow-2xl">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            className="mb-16"
+          >
+            <h2 className="text-4xl md:text-6xl font-heading font-extrabold tracking-tighter mb-8 text-background">
+              {t('home.theStandard')}
+            </h2>
+            <p className="text-xl md:text-2xl font-light text-background/80 leading-relaxed max-w-5xl">
+              {t('home.theStandardDesc')}
+            </p>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-12 border-t border-background/20 pt-12">
+            {[
+              { num: '01', title: t('home.whyUs1Title'), desc: t('home.whyUs1Desc') },
+              { num: '02', title: t('home.whyUs2Title'), desc: t('home.whyUs2Desc') },
+              { num: '03', title: t('home.whyUs3Title'), desc: t('home.whyUs3Desc') },
+            ].map(item => (
+              <div key={item.num}>
+                <div className="text-4xl md:text-5xl font-heading font-light text-primary mb-6">{item.num}</div>
+                <h4 className="text-2xl font-bold font-heading mb-4 text-background">{item.title}</h4>
+                <p className="text-background/70 text-lg leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }

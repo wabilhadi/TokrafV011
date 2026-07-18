@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import api from '../lib/api';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from '../hooks/useTranslation';
 import { TOKRAF_PRODUCTS } from '../lib/products';
 
@@ -20,6 +21,10 @@ const DUMMY_PRODUCTS = TOKRAF_PRODUCTS;
 
 export default function Layanan() {
   const { divisi } = useParams<{ divisi?: string }>();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchQuery = searchParams.get('search') || '';
+
   const currentCategory = divisi || 'all';
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,20 +42,22 @@ export default function Layanan() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await api.get('/products');
-        if (data && data.length > 0) {
+        setLoading(true);
+        const endpoint = searchQuery 
+          ? `/products?search=${encodeURIComponent(searchQuery)}`
+          : '/products';
+        const { data } = await api.get(endpoint);
+        if (data) {
           setProducts(data);
-        } else {
-          setProducts(DUMMY_PRODUCTS);
         }
       } catch (err) {
-        setProducts(DUMMY_PRODUCTS);
+        console.error('Failed to fetch products:', err);
       } finally {
         setLoading(false);
       }
     };
     fetchProducts();
-  }, []);
+  }, [searchQuery]);
 
   const filteredProducts = products.filter(p => {
     if (currentCategory === 'all') return true;
@@ -59,24 +66,30 @@ export default function Layanan() {
   });
 
   // True Masonry: Split into 3 columns for better sizing on large screens
-  const col1 = filteredProducts.filter((_, i) => i % 3 === 0);
-  const col2 = filteredProducts.filter((_, i) => i % 3 === 1);
-  const col3 = filteredProducts.filter((_, i) => i % 3 === 2);
+  // Using CSS columns instead of manual arrays for responsive masonry
 
   return (
-    <div className={`w-full min-h-screen pb-40 bg-background text-foreground transition-colors duration-500`}>
+    <div className={`w-full min-h-screen pb-20 bg-background text-foreground transition-colors duration-500`}>
 
       {/* Header Section */}
-      <div className="pt-40 pb-20 px-6 md:px-12 max-w-[1400px] mx-auto border-b border-foreground/10">
+      <div className="pt-28 pb-8 px-6 md:px-12 max-w-[1400px] mx-auto border-b border-foreground/10">
         <motion.h1 
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`text-6xl md:text-[9rem] font-medium font-sans tracking-tight leading-none mb-12`}
+          className={`text-4xl md:text-5xl lg:text-6xl font-bold font-heading tracking-tight leading-tight mb-4`}
         >
-          {currentCategory === 'all' ? 'All Services.' : `${currentCategory.replace('-', ' ')}.`}
+          {searchQuery 
+            ? `Search: "${searchQuery}"` 
+            : currentCategory === 'all' ? 'All Services.' : `${currentCategory.replace('-', ' ')}.`
+          }
         </motion.h1>
+        {searchQuery && (
+           <p className="text-foreground/60 mb-8">
+             Menampilkan hasil pencarian untuk "{searchQuery}"
+           </p>
+        )}
         
-        <div className="flex flex-wrap gap-3 mt-12">
+        <div className="flex flex-wrap gap-3 mt-8">
           {tabs.map((tab) => (
             <Link 
               key={tab.id} 
@@ -94,39 +107,20 @@ export default function Layanan() {
       </div>
 
       {/* Masonry Grid Section */}
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 mt-32">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 mt-16">
         {loading ? (
           <div className="text-center text-xl font-light py-20">{t('layanan.loading')}</div>
         ) : filteredProducts.length === 0 ? (
           <div className="text-center text-xl font-light py-20">{t('layanan.noProducts')}</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16">
-            {/* Column 1 */}
-            <div className="flex flex-col gap-24">
-              <AnimatePresence>
-                {col1.map((product, idx) => (
-                  <ProductCard key={product.id} product={product} idx={idx * 3} tabs={tabs} />
-                ))}
-              </AnimatePresence>
-            </div>
-            
-            {/* Column 2 */}
-            <div className="flex flex-col gap-24 md:mt-24">
-              <AnimatePresence>
-                {col2.map((product, idx) => (
-                  <ProductCard key={product.id} product={product} idx={idx * 3 + 1} tabs={tabs} />
-                ))}
-              </AnimatePresence>
-            </div>
-
-            {/* Column 3 */}
-            <div className="flex flex-col gap-24 md:mt-48">
-              <AnimatePresence>
-                {col3.map((product, idx) => (
-                  <ProductCard key={product.id} product={product} idx={idx * 3 + 2} tabs={tabs} />
-                ))}
-              </AnimatePresence>
-            </div>
+          <div className="columns-2 md:columns-3 lg:columns-4 gap-6 md:gap-8 space-y-8 md:space-y-12">
+            <AnimatePresence>
+              {filteredProducts.map((product, idx) => (
+                <div key={product.id} className="break-inside-avoid">
+                  <ProductCard product={product} idx={idx} tabs={tabs} />
+                </div>
+              ))}
+            </AnimatePresence>
           </div>
         )}
       </div>
@@ -178,13 +172,19 @@ function ProductCard({ product, idx, tabs }: { product: Product, idx: number, ta
       <Link to={`/produk/${product.id}`} className="block relative">
         <div className={`relative overflow-hidden bg-secondary/50 rounded-3xl ${aspectRatio} mb-8 shadow-sm transition-shadow duration-500 hover:shadow-xl`}>
           {/* Fallback Image */}
-          <motion.img 
-            src={product.imageUrl?.startsWith('http') ? product.imageUrl : `http://localhost:5000${product.imageUrl}`} 
-            alt={product.name} 
-            className="absolute inset-0 w-full h-full object-cover"
-            animate={{ scale: isHovered ? 1.05 : 1 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-          />
+          {product.imageUrl ? (
+            <motion.img 
+              src={product.imageUrl.startsWith('http') ? product.imageUrl : `http://localhost:5000${product.imageUrl}`} 
+              alt={product.name} 
+              className="absolute inset-0 w-full h-full object-cover"
+              animate={{ scale: isHovered ? 1.05 : 1 }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
+            />
+          ) : (
+            <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-secondary text-foreground/30 font-medium text-sm">
+              No Image
+            </div>
+          )}
           
           {/* Hover Video Overlay */}
           {product.videoUrl && (
@@ -216,19 +216,19 @@ function ProductCard({ product, idx, tabs }: { product: Product, idx: number, ta
 
         <div className="flex justify-between items-start">
           <div className="pr-4">
-            <h3 className="text-3xl font-medium font-sans text-foreground mb-2 leading-tight group-hover:text-primary transition-colors">
+            <h3 className="text-xl md:text-2xl font-medium font-sans text-foreground mb-1 leading-tight group-hover:text-primary transition-colors">
               {product.name}
             </h3>
-            <p className="text-foreground/60 text-sm font-sans max-w-sm">
+            <p className="text-foreground/60 text-xs md:text-sm font-sans max-w-sm line-clamp-2">
               {product.description}
             </p>
           </div>
           <div className="text-right flex-shrink-0">
-            <p className="text-sm font-bold font-sans uppercase tracking-widest text-foreground/80 mb-2">
+            <p className="text-[10px] md:text-xs font-bold font-sans uppercase tracking-widest text-foreground/80 mb-1">
               {tabs.find(t => t.id === product.category)?.label || product.category}
             </p>
             <p className="text-lg font-medium font-sans text-foreground">
-              Rp {product.basePrice.toLocaleString('id-ID')}
+              Rp {Number(product.price || 0).toLocaleString('id-ID')}
             </p>
           </div>
         </div>

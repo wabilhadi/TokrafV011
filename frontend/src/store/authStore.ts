@@ -1,13 +1,14 @@
 import { create } from 'zustand';
 
-type AuthState = {
+// ─── Admin Auth ───────────────────────────────────────────────────────────────
+type AdminAuthState = {
   token: string | null;
   user: any | null;
   setAuth: (token: string, user: any) => void;
   logout: () => void;
 };
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AdminAuthState>((set) => ({
   token: localStorage.getItem('tokraf-admin-token'),
   user: JSON.parse(localStorage.getItem('tokraf-admin-user') || 'null'),
   setAuth: (token, user) => {

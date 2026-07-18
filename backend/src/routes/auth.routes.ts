@@ -1,9 +1,11 @@
 import { Router } from 'express';
-import { login, register } from '../controllers/auth.controller';
+import { login, getMe } from '../controllers/auth.controller';
+import { authenticateJWT } from '../middleware/auth.middleware';
 
 const router = Router();
 
+// Only admin login is supported now
 router.post('/login', login);
-router.post('/register', register);
+router.get('/me', authenticateJWT, getMe);
 
 export default router;

@@ -1,60 +1,46 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../lib/db';
 
-const prisma = new PrismaClient();
-
-export const createCheckoutOrder = async (req: Request, res: Response) => {
+export const createOrder = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, whatsapp, address, items, totalAmount } = req.body;
+    const { userId, items, totalAmount } = req.body;
 
-    if (!name || !whatsapp || !address || !items || items.length === 0) {
-      return res.status(400).json({ message: 'Semua field (nama, wa, alamat, keranjang) wajib diisi' });
+    if (!userId || !items || items.length === 0) {
+      res.status(400).json({ error: 'userId dan items wajib diisi' });
+      return;
     }
 
-    // 1. Silent Registration / Find Customer
-    // Check if customer with this WhatsApp already exists
-    let customer = await prisma.customer.findUnique({
-      where: { whatsapp }
-    });
-
-    // If not exists, create a new customer (Silent Registration)
-    if (!customer) {
-      customer = await prisma.customer.create({
-        data: {
-          name,
-          whatsapp,
-          address
-        }
-      });
-    }
-
-    // 2. Create Order & OrderItems within a Transaction
-    const newOrder = await prisma.order.create({
+    const order = await prisma.order.create({
       data: {
-        customerId: customer.id,
+        userId,
         totalAmount,
         status: 'PENDING',
         items: {
           create: items.map((item: any) => ({
             productId: item.productId,
             quantity: item.quantity,
-            price: item.price
-          }))
-        }
+            price: item.price,
+          })),
+        },
       },
-      include: {
-        items: true,
-        customer: true
-      }
+      include: { items: true, user: { select: { id: true, name: true, email: true } } },
     });
 
-    res.status(201).json({
-      message: 'Pesanan berhasil dibuat',
-      order: newOrder
-    });
-
+    res.status(201).json({ message: 'Pesanan berhasil dibuat', order });
   } catch (error) {
-    console.error('Error creating order:', error);
-    res.status(500).json({ message: 'Terjadi kesalahan pada server saat memproses pesanan' });
+    console.error('createOrder error:', error);
+    res.status(500).json({ error: 'Gagal membuat pesanan' });
+  }
+};
+
+export const getOrders = async (_req: Request, res: Response): Promise<void> => {
+  try {
+    const orders = await prisma.order.findMany({
+      include: { items: { include: { product: true } }, user: { select: { id: true, name: true, email: true } } },
+      orderBy: { createdAt: 'desc' },
+    });
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ error: 'Gagal mengambil data pesanan' });
   }
 };

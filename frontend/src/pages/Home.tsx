@@ -1,19 +1,9 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ArrowUpRight, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
-import { TOKRAF_PRODUCTS } from '../lib/products';
-
-// ─── Produk Terlaris (pilih dari katalog nyata) ───────────────────────────────
-const BESTSELLERS = [
-  { ...TOKRAF_PRODUCTS.find(p => p.id === 'k1')!, badge: 'Terlaris' },
-  { ...TOKRAF_PRODUCTS.find(p => p.id === 'm4')!, badge: 'Favorit' },
-  { ...TOKRAF_PRODUCTS.find(p => p.id === 'k4')!, badge: 'Hits' },
-  { ...TOKRAF_PRODUCTS.find(p => p.id === 'm5')!, badge: 'New' },
-  { ...TOKRAF_PRODUCTS.find(p => p.id === 'p1')!, badge: 'Promo' },
-  { ...TOKRAF_PRODUCTS.find(p => p.id === 'k2')!, badge: 'Populer' },
-];
+// Bestsellers fetched dynamically
 
 // ─── Division data ─────────────────────────────────────────────────────────────
 const DIVISIONS = [
@@ -23,6 +13,7 @@ const DIVISIONS = [
     href: '/layanan/konveksi',
     title: 'Tokraf Konveksi.',
     desc: 'Kaos, jaket, hoodie, polo, jersey, korsa — produksi custom berkualitas tinggi.',
+    price: 'Mulai Rp 65.000',
     bg: 'from-[#800000] to-[#4a0000]',
     accent: '#ffd6d6',
     image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800',
@@ -33,6 +24,7 @@ const DIVISIONS = [
     href: '/layanan/merch',
     title: 'Tokraf Merch.',
     desc: 'Lanyard, mug, tumbler, ganci, ID card — merchandise event profesional.',
+    price: 'Mulai Rp 9.000',
     bg: 'from-[#2d1a1a] to-[#1a0a0a]',
     accent: '#ffb3b3',
     image: 'https://images.unsplash.com/photo-1610943640030-22cba2bd11d3?q=80&w=800',
@@ -43,6 +35,7 @@ const DIVISIONS = [
     href: '/layanan/digital-printing',
     title: 'Tokraf Print.',
     desc: 'Banner, spanduk, sticker, kartu nama, poster — cetak berkualitas ekspor.',
+    price: 'Mulai Rp 25.000',
     bg: 'from-[#5a1a1a] to-[#2d0d0d]',
     accent: '#ffc0c0',
     image: 'https://images.unsplash.com/photo-1563690623230-0322ba6db7d4?q=80&w=800',
@@ -50,7 +43,7 @@ const DIVISIONS = [
 ];
 
 // ─── Product Card ──────────────────────────────────────────────────────────────
-function ProductCard({ product, index }: { product: typeof BESTSELLERS[0]; index: number }) {
+function ProductCard({ product, index }: { product: any; index: number }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -58,78 +51,43 @@ function ProductCard({ product, index }: { product: typeof BESTSELLERS[0]; index
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.21, 1.11, 0.81, 0.99] }}
+      className="group relative"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <Link to={`/produk/${product.id}`} className="block group">
-        <div
-          className="relative rounded-[2rem] overflow-hidden bg-secondary border border-border transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2 group-hover:border-primary/30"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
-          {/* Badge */}
-          <div className="absolute top-4 left-4 z-20">
-            <span className="text-[11px] font-bold uppercase tracking-widest bg-primary text-white px-3 py-1.5 rounded-full shadow-md">
-              {product.badge}
-            </span>
-          </div>
-
-          {/* Arrow on hover */}
-          <motion.div
-            className="absolute top-4 right-4 z-20 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-md"
-            initial={{ opacity: 0, scale: 0.7 }}
-            animate={{ opacity: hovered ? 1 : 0, scale: hovered ? 1 : 0.7 }}
-            transition={{ duration: 0.25 }}
-          >
-            <ArrowUpRight size={16} className="text-foreground" />
-          </motion.div>
-
-          {/* Product image */}
-          <div className="aspect-[3/4] overflow-hidden bg-background">
+      <Link to={`/produk/${product.id}`} className="block relative">
+        <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-secondary/30 mb-4 shadow-sm group-hover:shadow-xl transition-all duration-500">
+          {product.imageUrl ? (
             <motion.img
-              src={product.imageUrl}
+              src={product.imageUrl.startsWith('http') ? product.imageUrl : `http://localhost:5000${product.imageUrl}`}
               alt={product.name}
-              className="w-full h-full object-cover"
-              animate={{ scale: hovered ? 1.08 : 1 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute inset-0 w-full h-full object-contain p-2"
+              animate={{ scale: hovered ? 1.05 : 1 }}
+              transition={{ duration: 0.7 }}
             />
+          ) : (
+            <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-secondary text-foreground/30 font-medium text-sm">
+              No Image
+            </div>
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+          <div className="absolute top-4 right-4 bg-background/90 backdrop-blur text-foreground px-4 py-1.5 rounded-full text-xs font-bold font-sans tracking-wider shadow-lg">
+            Terbaru
           </div>
+        </div>
 
-          {/* Info */}
-          <div className="p-5 pb-6">
-            {/* Category pill */}
-            <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-primary/70">
-              {product.divisi.replace('_', ' ')}
-            </span>
-
-            {/* Name */}
-            <h3 className="text-lg font-bold text-foreground mt-1 mb-1 leading-tight tracking-tight">
+        <div className="flex justify-between items-start pr-2">
+          <div>
+            <h3 className="text-2xl font-sans font-medium text-foreground mb-1 group-hover:text-primary transition-colors">
               {product.name}
             </h3>
-
-            {/* Price row */}
-            <div className="flex items-center justify-between mt-3">
-              <div>
-                <span className="text-[10px] text-foreground/40 block mb-0.5">Mulai dari</span>
-                <span className="text-xl font-extrabold text-primary">
-                  Rp {Number(product.price).toLocaleString('id-ID')}
-                </span>
-              </div>
-
-              {/* Hover CTA */}
-              <motion.div
-                animate={{ opacity: hovered ? 1 : 0, x: hovered ? 0 : 8 }}
-                transition={{ duration: 0.2 }}
-                className="text-sm font-bold text-primary flex items-center gap-1"
-              >
-                Pesan <ArrowRight size={14} />
-              </motion.div>
-            </div>
-
-            {/* Min order */}
-            {product.minOrder > 1 && (
-              <p className="text-[11px] text-foreground/40 mt-2">Min. {product.minOrder} pcs</p>
-            )}
+            <p className="text-foreground/50 text-sm font-sans">{product.divisi?.replace('_', ' ')}</p>
           </div>
+          <p className="text-xl font-sans font-medium text-foreground">
+            Rp {product.price?.toLocaleString('id-ID')}
+          </p>
         </div>
       </Link>
     </motion.div>
@@ -149,7 +107,7 @@ function DivisionCard({ div, index }: { div: typeof DIVISIONS[0]; index: number 
     >
       <Link to={div.href} className="block group">
         <div
-          className={`relative rounded-[2rem] overflow-hidden bg-gradient-to-br ${div.bg} h-full min-h-[420px] flex flex-col justify-end p-8 cursor-pointer`}
+          className={`relative rounded-[2rem] overflow-hidden bg-gradient-to-br ${div.bg} aspect-square md:aspect-auto md:h-full md:min-h-[360px] flex flex-col justify-end p-5 md:p-6 cursor-pointer`}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
@@ -174,7 +132,7 @@ function DivisionCard({ div, index }: { div: typeof DIVISIONS[0]; index: number 
           </div>
 
           {/* Content */}
-          <div className="relative z-10 mt-8">
+          <div className="relative z-10 mt-6">
             <motion.h3
               className="text-3xl md:text-4xl font-extrabold text-white tracking-tighter leading-tight mb-3"
               animate={{ y: hovered ? -4 : 0 }}
@@ -183,11 +141,18 @@ function DivisionCard({ div, index }: { div: typeof DIVISIONS[0]; index: number 
               {div.title}
             </motion.h3>
             <motion.p
-              className="text-white/70 text-sm leading-relaxed mb-6 max-w-xs"
+              className="text-white/70 text-sm md:text-base leading-relaxed mb-2 max-w-xs"
               animate={{ opacity: hovered ? 1 : 0.7 }}
               transition={{ duration: 0.3 }}
             >
               {div.desc}
+            </motion.p>
+
+            <motion.p
+              className="text-white font-bold text-base mb-6"
+              animate={{ opacity: hovered ? 1 : 0.9 }}
+            >
+              {div.price}
             </motion.p>
 
             {/* CTA button */}
@@ -200,7 +165,7 @@ function DivisionCard({ div, index }: { div: typeof DIVISIONS[0]; index: number 
               }}
               transition={{ duration: 0.3 }}
             >
-              Explore <ArrowRight size={14} />
+              Lihat Produk <ArrowRight size={14} />
             </motion.span>
           </div>
         </div>
@@ -217,21 +182,36 @@ export default function Home() {
   const opacityHero = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const yBgCTA = useTransform(scrollYProgress, [0, 1], ['-10%', '30%']);
 
+  const [bestsellers, setBestsellers] = useState<any[]>([]);
+  const [recommended, setRecommended] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/products')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setBestsellers(data.slice(0, 4)); // Get 4 products for bestsellers
+          setRecommended(data.filter((p: any) => p.isRecommended).slice(0, 4)); // Get 4 recommended products
+        }
+      })
+      .catch(err => console.error('Failed to fetch products', err));
+  }, []);
+
   return (
     <div className="w-full bg-background overflow-x-hidden font-sans">
 
       {/* ── HERO ── */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-        <motion.div style={{ y: yHero, opacity: opacityHero }} className="relative z-10 text-center px-6">
+        <motion.div style={{ y: yHero, opacity: opacityHero }} className="relative z-10 text-center px-6 -mt-20 md:-mt-32">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h1 className="text-6xl md:text-[9rem] font-heading font-extrabold text-foreground leading-[0.85] tracking-tighter mb-8">
+            <h1 className="text-5xl md:text-7xl font-heading font-extrabold text-foreground leading-tight tracking-tighter mb-6">
               {t('home.heroTitlePart1')} <br /> <span className="text-primary">{t('home.heroTitlePart2')}</span>
             </h1>
-            <p className="text-xl md:text-3xl font-light text-foreground/80 max-w-3xl mx-auto tracking-tight mb-12">
+            <p className="text-lg md:text-xl font-light text-foreground/80 max-w-3xl mx-auto tracking-tight mb-8">
               {t('home.heroSubtitle')}
             </p>
             <a
@@ -246,7 +226,7 @@ export default function Home() {
       </section>
 
       {/* ── DIVISIONS — 3-column compact (Seed-style) ── */}
-      <section id="divisions" className="py-24 px-4">
+      <section id="divisions" className="py-10 px-4">
         <div className="max-w-[1400px] mx-auto">
 
           {/* Section header */}
@@ -255,13 +235,13 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="mb-14"
+            className="mb-8"
           >
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary/70">Ekosistem Tokraf</span>
-            <h2 className="text-5xl md:text-7xl font-heading font-extrabold text-foreground tracking-tighter mt-3 mb-5">
+            <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-foreground tracking-tighter mt-2 mb-4">
               3 Divisi.<br /><span className="text-primary/40">Satu Atap.</span>
             </h2>
-            <p className="text-foreground/60 text-xl max-w-lg leading-relaxed">
+            <p className="text-foreground/60 text-lg md:text-xl max-w-lg leading-relaxed">
               Semua kebutuhan produksi kreatifmu — dari pakaian custom hingga cetak banner — tersedia dalam satu platform.
             </p>
           </motion.div>
@@ -275,8 +255,42 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── REKOMENDASI PRODUK ── */}
+      {recommended.length > 0 && (
+        <section id="recommended" className="py-12 bg-card rounded-[2rem] mx-4 my-4 overflow-hidden border border-border/50">
+          <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6"
+            >
+              <div>
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary/70">Pilihan Admin</span>
+                <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-foreground tracking-tighter mt-3">
+                  Rekomendasi<br /><span className="text-primary">Produk.</span>
+                </h2>
+              </div>
+              <Link
+                to="/layanan"
+                className="self-start md:self-end inline-flex items-center gap-3 bg-secondary text-foreground font-heading font-bold px-8 py-4 rounded-full hover:bg-primary hover:text-white transition-all hover:scale-105 shadow-sm shrink-0"
+              >
+                Katalog Lengkap <ArrowRight size={18} />
+              </Link>
+            </motion.div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              {recommended.map((product, i) => (
+                <ProductCard key={product.id} product={product} index={i} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ── PRODUK TERLARIS — Seed card style ── */}
-      <section id="popular" className="py-24 bg-secondary rounded-[3rem] mx-4 my-4 overflow-hidden">
+      <section id="popular" className="py-12 bg-secondary rounded-[2rem] mx-4 my-4 overflow-hidden">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
 
           {/* Header */}
@@ -285,11 +299,11 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6"
+            className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6"
           >
             <div>
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary/70">Pilihan Populer</span>
-              <h2 className="text-5xl md:text-7xl font-heading font-extrabold text-foreground tracking-tighter mt-3">
+              <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-foreground tracking-tighter mt-3">
                 Produk<br /><span className="text-primary">Terlaris.</span>
               </h2>
             </div>
@@ -302,10 +316,14 @@ export default function Home() {
           </motion.div>
 
           {/* Product grid — 3 cols desktop, 2 cols tablet, 1 mobile */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {BESTSELLERS.map((product, i) => (
-              <ProductCard key={product.id} product={product} index={i} />
-            ))}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {bestsellers.length === 0 ? (
+              <div className="col-span-3 text-center py-20 text-foreground/50 text-xl font-light">Belum ada produk.</div>
+            ) : (
+              bestsellers.map((product, i) => (
+                <ProductCard key={product.id} product={product} index={i} />
+              ))
+            )}
           </div>
 
           {/* Stats row */}
@@ -314,15 +332,15 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="grid grid-cols-3 gap-4 mt-16 pt-12 border-t border-border"
+            className="grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-border"
           >
             {[
-              { val: '500+', label: 'Klien Puas' },
-              { val: '6 Thn', label: 'Pengalaman' },
+              { val: '100+', label: 'Klien Puas' },
+              { val: '1 Thn', label: 'Pengalaman' },
               { val: '100%', label: 'Custom Made' },
             ].map(s => (
               <div key={s.label} className="text-center">
-                <div className="text-4xl md:text-5xl font-extrabold text-primary mb-2">{s.val}</div>
+                <div className="text-3xl md:text-4xl font-extrabold text-primary mb-2">{s.val}</div>
                 <div className="text-sm font-bold text-foreground/50 uppercase tracking-widest">{s.label}</div>
               </div>
             ))}
@@ -330,33 +348,54 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── WHY US ── */}
-      <section className="py-40 bg-foreground text-background rounded-[3rem] mx-4 my-4">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-            className="mb-24"
-          >
-            <h2 className="text-5xl md:text-8xl font-heading font-extrabold tracking-tighter mb-8 text-background">
-              {t('home.theStandard')}
-            </h2>
-            <p className="text-3xl md:text-5xl font-light text-background/80 leading-tight max-w-5xl">
-              {t('home.theStandardDesc')}
-            </p>
-          </motion.div>
-          <div className="grid md:grid-cols-3 gap-16 border-t border-background/20 pt-16">
+      {/* ── CLIENT LOGOS ── */}
+      <section className="py-12 border-y border-border/50 bg-secondary/30 overflow-hidden mb-4">
+        <div className="max-w-[1400px] mx-auto px-6 text-center mb-8">
+          <p className="text-sm font-bold uppercase tracking-widest text-foreground/50">Dipercaya oleh 500+ Klien & Organisasi</p>
+        </div>
+        <div className="flex gap-8 md:gap-12 items-center justify-center flex-wrap max-w-4xl mx-auto opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+          {/* Dummy text for logos */}
+          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">UNU JOGJA</span>
+          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">PGSD UNU Jogja</span>
+          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">UIN SUKA</span>
+          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">BEM UCY</span>
+          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">AMIKOM YOGYA</span>
+          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">FARMASI UNU Jogja</span>
+          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">FTI UNU Jogja</span>
+          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">FE UNU Jogja</span>
+          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">FLORANCE UNU Jogja</span>
+          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">PERMASUM UNU Jogja</span>
+          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">Wo-Men In Tech Security</span>
+          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">++++</span>
+
+        </div>
+      </section>
+
+
+      {/* ── TESTIMONI ── */}
+      <section className="py-16 px-4 bg-secondary/30 mt-4 rounded-3xl mx-4">
+        <div className="max-w-[1400px] mx-auto text-center">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary/70">Ulasan Klien</span>
+          <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-foreground tracking-tighter mt-2 mb-10">
+            Kata <span className="text-primary">Mereka.</span>
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-6 text-left">
             {[
-              { num: '01', title: t('home.whyUs1Title'), desc: t('home.whyUs1Desc') },
-              { num: '02', title: t('home.whyUs2Title'), desc: t('home.whyUs2Desc') },
-              { num: '03', title: t('home.whyUs3Title'), desc: t('home.whyUs3Desc') },
-            ].map(item => (
-              <div key={item.num}>
-                <div className="text-6xl font-heading font-light text-primary mb-6">{item.num}</div>
-                <h4 className="text-2xl font-bold font-heading mb-4 text-background">{item.title}</h4>
-                <p className="text-background/70 text-lg leading-relaxed">{item.desc}</p>
+              { name: 'Budi (Panitia Event)', review: 'Bikin kaos panitia di sini cepet banget dan hasilnya memuaskan. Sablonnya awet gak gampang pecah.' },
+              { name: 'Siti (HIMA Kampus)', review: 'Pesen lanyard sama ID card buat maba. Kualitasnya juara, adminnya juga fast respon dan ramah.' },
+              { name: 'Agus (Pemilik UMKM)', review: 'Cetak banner dan stiker kemasan selalu di Tokraf. Warnanya tajam dan harganya bersahabat buat UMKM.' },
+            ].map((t, i) => (
+              <div key={i} className="bg-card border border-border p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-shadow">
+                <div className="flex text-yellow-500 mb-4 gap-1">
+                  <Star size={18} fill="currentColor" />
+                  <Star size={18} fill="currentColor" />
+                  <Star size={18} fill="currentColor" />
+                  <Star size={18} fill="currentColor" />
+                  <Star size={18} fill="currentColor" />
+                </div>
+                <p className="text-foreground/80 leading-relaxed mb-6 italic">"{t.review}"</p>
+                <div className="font-bold text-foreground font-heading tracking-wide">{t.name}</div>
               </div>
             ))}
           </div>
@@ -364,7 +403,7 @@ export default function Home() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="relative min-h-[80vh] flex items-center justify-center p-6 md:p-12 overflow-hidden mx-4 mb-24 rounded-[3rem]">
+      <section className="relative min-h-[60vh] flex items-center justify-center p-6 md:p-12 overflow-hidden mx-4 mb-12 rounded-[2rem]">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <motion.img
             style={{ y: yBgCTA, scale: 1.2 }}
@@ -379,11 +418,11 @@ export default function Home() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="relative z-10 w-full max-w-[1000px] bg-white/10 backdrop-blur-3xl border border-white/20 shadow-2xl rounded-[3rem] p-16 md:p-24 text-center overflow-hidden"
+          className="relative z-10 w-full max-w-[1000px] bg-white/10 backdrop-blur-3xl border border-white/20 shadow-2xl rounded-[2rem] p-12 md:p-20 text-center overflow-hidden"
         >
           <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent" />
           <h2
-            className="relative z-10 text-6xl md:text-[8rem] font-heading font-extrabold text-white tracking-tighter leading-[0.9] mb-12"
+            className="relative z-10 text-4xl md:text-6xl font-heading font-extrabold text-white tracking-tighter leading-tight mb-12"
             dangerouslySetInnerHTML={{ __html: t('home.startProject') }}
           />
           <a

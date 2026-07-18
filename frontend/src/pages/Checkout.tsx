@@ -64,7 +64,7 @@ Mohon informasi ketersediaan, estimasi pengerjaan, dan instruksi pembayarannya y
       <div className="max-w-[700px] mx-auto px-6 md:px-12">
 
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-6xl md:text-7xl font-extrabold font-heading tracking-tighter text-foreground mb-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold font-heading tracking-tighter text-foreground mb-4">
             Hampir selesai.
           </h1>
           <p className="text-foreground/50 text-lg mb-16">

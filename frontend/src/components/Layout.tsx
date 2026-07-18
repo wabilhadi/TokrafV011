@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import FloatingWA from './FloatingWA';
 
 export default function Layout() {
   return (
@@ -9,6 +10,7 @@ export default function Layout() {
       <main className="flex-grow pt-20">
         <Outlet />
       </main>
+      <FloatingWA />
       <Footer />
     </div>
   );
