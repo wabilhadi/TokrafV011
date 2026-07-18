@@ -59,7 +59,11 @@ app.use((err: any, _req: express.Request, res: express.Response, next: express.N
   next();
 });
 
-app.listen(port, () => {
-  console.log(`\n🚀 TOKRAF Server running on http://localhost:${port}`);
-  console.log(`📂 Uploads folder: ${uploadDir}\n`);
-});
+if (process.env.VERCEL !== '1') {
+  app.listen(port, () => {
+    console.log(`\n🚀 TOKRAF Server running on http://localhost:${port}`);
+    console.log(`📂 Uploads folder: ${uploadDir}\n`);
+  });
+}
+
+export default app;
