@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import { useTranslation } from '../hooks/useTranslation';
 import api from '../lib/api';
 
@@ -13,7 +12,6 @@ type Portfolio = {
   images: { url: string }[];
 };
 
-// Mock fallback data
 const MOCK_PORTFOLIO: Portfolio[] = [
   { id: '1', title: 'Kemeja PDH BEM', divisi: 'KONVEKSI', images: [{ url: 'https://placehold.co/800x600/ffe1e8/800000/png?text=PDH+BEM' }] },
   { id: '2', title: 'Totebag Seminar', divisi: 'MERCH', images: [{ url: 'https://placehold.co/800x600/ffe1e8/800000/png?text=Totebag' }] },
@@ -30,13 +28,11 @@ export default function Portofolio() {
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
-  const { scrollYProgress } = useScroll();
-  const yBg = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
 
   const tabs = [
-    { id: 'all', label: t('layanan.everything') },
+    { id: 'all', label: 'Semua' },
     { id: 'KONVEKSI', label: 'Konveksi' },
-    { id: 'MERCH', label: 'Merchandise' },
+    { id: 'MERCH', label: 'Merch' },
     { id: 'DIGITAL_PRINTING', label: 'Printing' },
   ];
 
@@ -55,89 +51,108 @@ export default function Portofolio() {
   };
 
   return (
-    <div className="w-full bg-background min-h-screen">
+    <div className="w-full bg-background min-h-screen overflow-x-hidden">
 
-      {/* Parallax Header */}
-      <section className="relative min-h-[40vh] md:min-h-[60vh] flex flex-col items-start justify-end pb-8 md:pb-16 pt-24 md:pt-32 overflow-hidden rounded-b-[1.5rem] md:rounded-b-[3rem] shadow-xl md:shadow-2xl mb-8 md:mb-24">
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <motion.img style={{ y: yBg, scale: 1.2 }} src="/assets/bg_portofolio.png" className="w-full h-full object-cover origin-top" alt="Portofolio" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-black/50 to-black/20" />
-        </div>
-        <div className="relative z-10 max-w-[1400px] w-full mx-auto px-4 md:px-8 mt-12 md:mt-32">
-          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
-            className="font-extrabold font-heading text-white tracking-tighter leading-[1.1] mb-2 md:mb-8 text-[clamp(2.5rem,5vw,5rem)]">
+      {/* ── Hero banner ── */}
+      <div className="relative h-[200px] md:h-[360px] overflow-hidden">
+        <img
+          src="/assets/bg_portofolio.png"
+          alt="Portofolio Tokraf"
+          className="absolute inset-0 w-full h-full object-cover scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/20" />
+        <div className="relative z-10 h-full flex flex-col justify-end px-5 pb-6 md:pb-10 md:px-12">
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-extrabold font-heading text-white text-[clamp(2rem,6vw,4.5rem)] tracking-tight leading-none mb-1"
+          >
             {t('portofolio.gallery')}
           </motion.h1>
-          <p className="font-light text-white/80 max-w-2xl text-[clamp(1rem,2vw,1.5rem)] leading-tight">{t('portofolio.galleryDesc')}</p>
+          <p className="text-white/70 text-sm md:text-lg">{t('portofolio.galleryDesc')}</p>
         </div>
-      </section>
+      </div>
 
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8 pb-16 md:pb-24">
-        {/* Filter Tabs */}
-        <div className="mb-6 md:mb-12 flex flex-wrap gap-2 md:gap-4">
-          {tabs.map((tab) => (
-            <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-1.5 md:px-8 md:py-4 rounded-full font-heading font-bold text-xs md:text-lg transition-all ${
-                activeTab === tab.id
-                  ? 'bg-primary text-primary-foreground shadow-md md:shadow-xl md:scale-105'
-                  : 'bg-secondary text-foreground hover:bg-foreground hover:text-background'
-              }`}>
-              {tab.label}
-            </button>
-          ))}
-        </div>
+      {/* ── Content ── */}
+      <div className="section-px py-5 pb-16">
+        <div className="section-container">
 
-        {/* Gallery Grid */}
-        {loading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="bg-card border border-border rounded-[2rem] overflow-hidden animate-pulse">
-                <div className="aspect-[4/3] bg-muted" />
-                <div className="p-6 space-y-2"><div className="h-4 bg-muted rounded w-3/4" /></div>
-              </div>
+          {/* Filter tabs */}
+          <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 mb-6">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`shrink-0 px-4 py-2 rounded-full font-heading font-bold text-xs md:text-sm transition-all
+                  ${activeTab === tab.id
+                    ? 'bg-primary text-white shadow-sm'
+                    : 'bg-secondary/60 text-foreground hover:bg-secondary'
+                  }`}
+              >
+                {tab.label}
+              </button>
             ))}
           </div>
-        ) : (
-          <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <AnimatePresence mode="popLayout">
-              {filtered.map((item) => (
-                <motion.div layout key={item.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4 }}
-                  className="bg-white/5 backdrop-blur-xl border border-border/30 p-4 rounded-[2rem] group"
-                >
-                  <div className="relative aspect-[4/3] rounded-[1.5rem] overflow-hidden bg-secondary mb-6">
-                    <img
-                      src={resolveUrl(item.images?.[0]?.url)}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                  <div className="px-4 pb-4">
-                    <span className="text-primary text-xs font-bold uppercase tracking-widest mb-2 block">
-                      {item.divisi.replace('_', ' ')}
-                    </span>
-                    <h3 className="text-2xl font-bold font-heading text-foreground">{item.title}</h3>
-                    {item.clientName && <p className="text-sm text-foreground/50 mt-1">{item.clientName}</p>}
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        )}
 
-        {/* CTA */}
-        <div className="mt-32 text-center bg-secondary/50 backdrop-blur-3xl border border-border/50 rounded-[3rem] p-16 md:p-24 relative overflow-hidden">
-          <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-8 relative z-10">
-            {t('portofolio.wantBrandHere')}
-          </h2>
-          <Link to="/kontak"
-            className="inline-flex items-center gap-3 bg-primary text-background px-10 py-5 rounded-full font-heading font-bold text-xl hover:scale-105 transition-all relative z-10 shadow-2xl">
-            {t('portofolio.startProject')} <ArrowRight />
-          </Link>
+          {/* Gallery */}
+          {loading ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="rounded-2xl overflow-hidden border border-border animate-pulse">
+                  <div className="aspect-[4/3] bg-secondary/50" />
+                  <div className="p-3 space-y-2">
+                    <div className="h-2.5 bg-secondary/50 rounded w-1/3" />
+                    <div className="h-3.5 bg-secondary/50 rounded w-3/4" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
+              <AnimatePresence mode="popLayout">
+                {filtered.map((item) => (
+                  <motion.div
+                    layout
+                    key={item.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
+                    className="group rounded-2xl overflow-hidden border border-border/40 bg-card shadow-sm"
+                  >
+                    <div className="relative aspect-[4/3] overflow-hidden bg-secondary/30">
+                      <img
+                        src={resolveUrl(item.images?.[0]?.url)}
+                        alt={item.title}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="p-3">
+                      <span className="text-primary text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-0.5 block">
+                        {item.divisi.replace('_', ' ')}
+                      </span>
+                      <h3 className="text-xs md:text-sm font-bold font-heading text-foreground leading-snug line-clamp-2">{item.title}</h3>
+                      {item.clientName && <p className="text-[10px] text-foreground/40 mt-0.5">{item.clientName}</p>}
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          )}
+
+          {/* CTA */}
+          <div className="mt-10 md:mt-16 text-center bg-secondary/40 border border-border/30 rounded-2xl p-7 md:p-14">
+            <h2 className="text-xl md:text-4xl font-heading font-bold text-foreground mb-4">
+              {t('portofolio.wantBrandHere')}
+            </h2>
+            <Link
+              to="/kontak"
+              className="inline-flex items-center gap-2 bg-primary text-white px-7 py-3.5 rounded-full font-heading font-bold text-sm md:text-lg hover:opacity-90 active:scale-95 transition-all shadow-lg"
+            >
+              {t('portofolio.startProject')}
+            </Link>
+          </div>
         </div>
       </div>
     </div>

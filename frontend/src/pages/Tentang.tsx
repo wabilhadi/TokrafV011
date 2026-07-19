@@ -1,122 +1,100 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useTranslation } from '../hooks/useTranslation';
 
 export default function Tentang() {
   const { t } = useTranslation();
-  const { scrollYProgress } = useScroll();
-  const yBg = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
 
   return (
-    <div className="w-full bg-background min-h-screen">
-      
-      {/* Parallax Header */}
-      <section className="relative min-h-[40vh] md:min-h-[60vh] flex flex-col items-center justify-center pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden rounded-b-[1.5rem] md:rounded-b-[3rem] shadow-xl md:shadow-2xl mb-8 md:mb-24">
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <motion.img style={{ y: yBg, scale: 1.2 }} src="/assets/bg_tentang.png" className="w-full h-full object-cover origin-top" alt="Tentang Background" />
-          <div className="absolute inset-0 bg-black/40"></div>
-        </div>
-        
-        <div className="relative z-10 text-center px-4 w-full">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
+    <div className="w-full bg-background min-h-screen overflow-x-hidden">
+
+      {/* ── Hero banner ── */}
+      <div className="relative h-[220px] md:h-[380px] overflow-hidden">
+        <img
+          src="/assets/bg_tentang.png"
+          alt="Tentang Tokraf"
+          className="absolute inset-0 w-full h-full object-cover scale-105"
+        />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="relative z-10 h-full flex flex-col justify-end px-5 pb-6 md:pb-10 md:px-12">
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-extrabold font-heading text-white tracking-tighter leading-tight text-[clamp(2.5rem,5vw,5rem)]"
+            className="font-extrabold font-heading text-white text-[clamp(2rem,6vw,4.5rem)] tracking-tight leading-none"
           >
             {t('tentang.ourStory')}
           </motion.h1>
         </div>
-      </section>
+      </div>
 
-      <div className="max-w-[1400px] mx-auto px-4 md:px-12 pb-16 md:pb-24">
-        
-        {/* Content Section */}
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-16 lg:gap-24 items-start">
-          
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6 md:space-y-8"
-          >
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground leading-tight">
-              {t('tentang.heading')}
-            </h2>
-            <p className="text-2xl font-light text-foreground/80 leading-relaxed">
-              {t('tentang.subheading')}
-            </p>
-            <div className="space-y-6 text-lg text-foreground/70 leading-relaxed font-light">
-              <p>
-                {t('tentang.p1')}
+      {/* ── Body ── */}
+      <div className="section-px py-8 md:py-16">
+        <div className="section-container">
+
+          {/* Two-col grid on desktop */}
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-16 mb-12 md:mb-20">
+
+            {/* Left: story */}
+            <div className="space-y-5">
+              <h2 className="text-[clamp(1.5rem,4vw,2.5rem)] font-heading font-bold text-foreground leading-tight">
+                {t('tentang.heading')}
+              </h2>
+              <p className="text-base md:text-xl font-light text-foreground/70 leading-relaxed">
+                {t('tentang.subheading')}
               </p>
-              <p>
-                {t('tentang.p2')}
-              </p>
+              <div className="space-y-4 text-sm md:text-base text-foreground/60 leading-relaxed">
+                <p>{t('tentang.p1')}</p>
+                <p>{t('tentang.p2')}</p>
+              </div>
             </div>
-          </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-secondary/50 backdrop-blur-2xl border border-border/50 shadow-2xl p-10 md:p-16 rounded-[3rem]"
-          >
-            <h3 className="text-3xl font-heading font-bold text-foreground mb-10">{t('tentang.coreValues')}</h3>
-            <div className="space-y-8">
-              {[
-                { num: "01", title: t('tentang.cv1Title'), desc: t('tentang.cv1Desc') },
-                { num: "02", title: t('tentang.cv2Title'), desc: t('tentang.cv2Desc') },
-                { num: "03", title: t('tentang.cv3Title'), desc: t('tentang.cv3Desc') },
-              ].map((val) => (
-                <div key={val.num} className="flex gap-6">
-                  <span className="text-2xl font-heading font-bold text-primary shrink-0">{val.num}</span>
-                  <div>
-                    <h4 className="text-xl font-bold text-foreground mb-2">{val.title}</h4>
-                    <p className="text-foreground/70">{val.desc}</p>
+            {/* Right: core values */}
+            <div className="bg-secondary/40 border border-border/30 rounded-2xl md:rounded-3xl p-6 md:p-10">
+              <h3 className="text-lg md:text-2xl font-heading font-bold text-foreground mb-6">
+                {t('tentang.coreValues')}
+              </h3>
+              <div className="space-y-5">
+                {[
+                  { num: '01', title: t('tentang.cv1Title'), desc: t('tentang.cv1Desc') },
+                  { num: '02', title: t('tentang.cv2Title'), desc: t('tentang.cv2Desc') },
+                  { num: '03', title: t('tentang.cv3Title'), desc: t('tentang.cv3Desc') },
+                ].map((val) => (
+                  <div key={val.num} className="flex gap-4 pb-5 border-b border-border/30 last:border-0 last:pb-0">
+                    <span className="text-xl font-heading font-extrabold text-primary shrink-0">{val.num}</span>
+                    <div>
+                      <h4 className="font-bold text-foreground mb-1 text-sm md:text-base">{val.title}</h4>
+                      <p className="text-foreground/60 text-xs md:text-sm leading-relaxed">{val.desc}</p>
+                    </div>
                   </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Why Us section */}
+          <div className="bg-foreground text-background rounded-2xl md:rounded-3xl p-6 md:p-14">
+            <h2 className="text-[clamp(1.5rem,4vw,3rem)] font-heading font-extrabold tracking-tight mb-4 md:mb-6">
+              {t('home.theStandard')}
+            </h2>
+            <p className="text-base md:text-xl font-light text-background/70 leading-relaxed mb-8 md:mb-10 max-w-3xl">
+              {t('home.theStandardDesc')}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 border-t border-background/20 pt-6 md:pt-10">
+              {[
+                { num: '01', title: t('home.whyUs1Title'), desc: t('home.whyUs1Desc') },
+                { num: '02', title: t('home.whyUs2Title'), desc: t('home.whyUs2Desc') },
+                { num: '03', title: t('home.whyUs3Title'), desc: t('home.whyUs3Desc') },
+              ].map(item => (
+                <div key={item.num}>
+                  <div className="text-2xl md:text-3xl font-heading font-light text-primary mb-3">{item.num}</div>
+                  <h4 className="text-base md:text-xl font-bold font-heading mb-2 text-background">{item.title}</h4>
+                  <p className="text-background/60 text-sm md:text-base leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
-          </motion.div>
-
-        </div>
-
-      </div>
-
-      {/* ── WHY US (Standar Kualitas) dipindah dari Home ── */}
-      <section className="py-16 bg-foreground text-background rounded-[2rem] mx-4 my-8 shadow-2xl">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-            className="mb-16"
-          >
-            <h2 className="text-4xl md:text-6xl font-heading font-extrabold tracking-tighter mb-8 text-background">
-              {t('home.theStandard')}
-            </h2>
-            <p className="text-xl md:text-2xl font-light text-background/80 leading-relaxed max-w-5xl">
-              {t('home.theStandardDesc')}
-            </p>
-          </motion.div>
-          <div className="grid md:grid-cols-3 gap-12 border-t border-background/20 pt-12">
-            {[
-              { num: '01', title: t('home.whyUs1Title'), desc: t('home.whyUs1Desc') },
-              { num: '02', title: t('home.whyUs2Title'), desc: t('home.whyUs2Desc') },
-              { num: '03', title: t('home.whyUs3Title'), desc: t('home.whyUs3Desc') },
-            ].map(item => (
-              <div key={item.num}>
-                <div className="text-4xl md:text-5xl font-heading font-light text-primary mb-6">{item.num}</div>
-                <h4 className="text-2xl font-bold font-heading mb-4 text-background">{item.title}</h4>
-                <p className="text-background/70 text-lg leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
           </div>
-        </div>
-      </section>
 
+        </div>
+      </div>
     </div>
   );
 }

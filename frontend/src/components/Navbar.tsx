@@ -17,13 +17,18 @@ export default function Navbar() {
   const totalItems = useCartStore((state) => state.getTotalItems());
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close menus on route change
   useEffect(() => { setIsOpen(false); }, [location]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
 
   const links = [
     { name: 'navbar.home', path: '/' },
@@ -43,129 +48,181 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 w-full md:top-4 md:left-1/2 md:-translate-x-1/2 md:w-[95%] lg:w-[90%] xl:w-[85%] max-w-[1280px] z-50 transition-all duration-500 md:rounded-full border-b md:border shadow-sm md:shadow-xl ${scrolled ? 'bg-background/95 backdrop-blur-2xl border-border/50 py-1' : 'bg-background/90 md:bg-background/60 backdrop-blur-md border-border/30 py-1.5 md:py-2'
-      }`}>
-      <div className="w-full px-4 md:px-6 xl:px-8">
-        <div className="flex justify-between items-center h-12 md:h-16">
+    <>
+      {/* ── NAVBAR ── */}
+      <nav
+        className={`
+          fixed top-0 left-0 right-0 w-full z-50
+          transition-all duration-300
+          /* mobile: flush bar */
+          border-b
+          /* md+: floating pill */
+          md:top-3 md:mx-auto md:left-4 md:right-4
+          md:rounded-full md:border
+          ${scrolled
+            ? 'bg-background/95 backdrop-blur-2xl border-border/60 shadow-md'
+            : 'bg-background/90 backdrop-blur-lg border-border/30 shadow-sm'
+          }
+        `}
+        style={{ maxWidth: '1300px', marginLeft: 'auto', marginRight: 'auto' }}
+      >
+        <div className="flex items-center justify-between px-4 h-[52px] md:h-[60px] md:px-6">
 
-          {/* Kiri: Logo dengan Jarak yang Pas */}
-          <div className="flex-shrink-0 pr-4 md:pr-6">
-            <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="text-xl md:text-3xl font-heading font-extrabold text-primary tracking-tighter">
-              TOKRAF
-            </Link>
+          {/* Logo */}
+          <Link
+            to="/"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="text-[1.25rem] md:text-2xl font-heading font-extrabold text-primary tracking-tighter shrink-0"
+          >
+            TOKRAF
+          </Link>
+
+          {/* Desktop nav links */}
+          <div className="hidden md:flex items-center gap-5 lg:gap-8 flex-1 justify-center">
+            {links.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path}
+                className="text-foreground/70 hover:text-primary font-heading font-semibold text-sm tracking-wide transition-colors relative group py-1"
+              >
+                {t(link.name)}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              </Link>
+            ))}
           </div>
 
-          {/* Bagian Tengah & Kanan (Desktop Only) */}
-          <div className="hidden md:flex items-center justify-between flex-1 gap-2 lg:gap-6">
-
-            {/* Tengah: Menu Navigasi dengan Gap Seimbang */}
-            <div className="flex items-center gap-x-3 lg:gap-x-6">
-              {links.map((link) => (
-                <Link key={link.name} to={link.path}
-                  className="text-foreground/80 hover:text-primary font-heading font-semibold text-[13px] lg:text-[14px] tracking-wide transition-colors relative group py-2">
-                  {t(link.name)}
-                  <span className="absolute bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-                </Link>
-              ))}
-            </div>
-
-            {/* Kanan: Alat Utilitas & Tombol Aksi */}
-            <div className="flex items-center gap-x-2 lg:gap-x-4">
-              {/* Search Bar Desktop */}
-              <form onSubmit={handleSearch} className="relative group">
-                <input
-                  type="text"
-                  placeholder="Cari kaos, banner..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-28 lg:w-36 xl:w-48 bg-secondary/50 border border-border/60 rounded-full py-1.5 pl-9 pr-4 text-sm text-foreground focus:outline-none focus:border-primary focus:bg-background transition-all"
-                />
-                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/50 group-focus-within:text-primary transition-colors" />
-              </form>
-
-              {/* Grup Ikon Fitur */}
-              <div className="flex items-center gap-x-2 border-r border-border/60 pr-4 lg:pr-5">
-                <button onClick={toggleTheme} className="text-foreground hover:text-primary transition-colors p-2 rounded-full hover:bg-secondary/60" aria-label="Toggle Theme">
-                  {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                </button>
-
-                {/* Keranjang */}
-                <button onClick={() => navigate('/cart')} className="relative p-2 text-foreground hover:text-primary transition-colors" aria-label="Keranjang">
-                  <ShoppingBag size={20} />
-                  {totalItems > 0 && (
-                    <span className="absolute top-0 right-0 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                      {totalItems}
-                    </span>
-                  )}
-                </button>
-              </div>
-
-              {/* Tombol Utama */}
-              <a href="https://wa.me/6281993294170" target="_blank" rel="noreferrer"
-                className="bg-primary text-primary-foreground px-4 lg:px-5 py-2 lg:py-2.5 rounded-full font-heading font-bold text-xs lg:text-sm hover:bg-foreground hover:text-background transition-all hover:scale-105 active:scale-95 whitespace-nowrap">
-                {t('navbar.orderNow')}
-              </a>
-            </div>
-
-          </div>
-
-          {/* Tombol Menu Mobile */}
-          <div className="md:hidden flex items-center gap-3">
-            <button onClick={() => navigate('/cart')} className="relative p-1.5 text-foreground hover:text-primary" aria-label="Keranjang">
-              <ShoppingBag size={20} />
+          {/* Desktop right actions */}
+          <div className="hidden md:flex items-center gap-3">
+            <form onSubmit={handleSearch} className="relative">
+              <input
+                type="text"
+                placeholder="Cari produk..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-36 xl:w-48 bg-secondary/60 border border-border/60 rounded-full py-1.5 pl-8 pr-3 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none focus:border-primary focus:bg-background transition-all"
+              />
+              <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-foreground/40" />
+            </form>
+            <button onClick={toggleTheme} className="p-2 text-foreground/70 hover:text-primary transition-colors rounded-full hover:bg-secondary/50" aria-label="Toggle Theme">
+              {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+            </button>
+            <button onClick={() => navigate('/cart')} className="relative p-2 text-foreground/70 hover:text-primary transition-colors" aria-label="Cart">
+              <ShoppingBag size={18} />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center">
+                <span className="absolute top-0.5 right-0.5 bg-primary text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center leading-none">
                   {totalItems}
                 </span>
               )}
             </button>
-            <button onClick={() => setIsOpen(!isOpen)} className="text-primary p-1.5">
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            <a
+              href="https://wa.me/6281993294170"
+              target="_blank"
+              rel="noreferrer"
+              className="bg-primary text-white px-4 py-2 rounded-full font-heading font-bold text-xs lg:text-sm hover:opacity-90 active:scale-95 transition-all whitespace-nowrap"
+            >
+              {t('navbar.orderNow')}
+            </a>
+          </div>
+
+          {/* Mobile right actions */}
+          <div className="md:hidden flex items-center gap-2">
+            <button onClick={toggleTheme} className="p-1.5 text-foreground/70" aria-label="Theme">
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+            <button onClick={() => navigate('/cart')} className="relative p-1.5 text-foreground/70" aria-label="Cart">
+              <ShoppingBag size={20} />
+              {totalItems > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 bg-primary text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center leading-none">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-1.5 text-primary"
+              aria-label="Menu"
+              aria-expanded={isOpen}
+            >
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
 
         </div>
-      </div>
+      </nav>
 
-      {/* Menu Mobile */}
+      {/* ── MOBILE FULL-SCREEN MENU ── */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
-            className="md:hidden absolute top-full left-0 w-full bg-background border-b border-border shadow-2xl rounded-b-3xl overflow-hidden">
-            <div className="px-6 py-6 flex flex-col space-y-4">
-              
-              {/* Search Bar Mobile */}
-              <form onSubmit={handleSearch} className="relative mb-2">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 md:hidden"
+            style={{ top: '52px' }}
+          >
+            {/* Backdrop */}
+            <div
+              className="absolute inset-0 bg-background/98 backdrop-blur-2xl"
+              onClick={() => setIsOpen(false)}
+            />
+            {/* Menu content */}
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="relative z-10 flex flex-col h-full px-6 pt-6 pb-10 overflow-y-auto"
+            >
+              {/* Search */}
+              <form onSubmit={handleSearch} className="relative mb-6">
                 <input
                   type="text"
-                  placeholder="Cari kaos, banner..."
+                  placeholder="Cari kaos, banner, merchandise..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-secondary/50 border border-border/60 rounded-full py-3 pl-11 pr-4 text-base text-foreground focus:outline-none focus:border-primary focus:bg-background transition-all"
+                  className="w-full bg-secondary/50 border border-border rounded-2xl py-3.5 pl-11 pr-4 text-base text-foreground placeholder:text-foreground/40 focus:outline-none focus:border-primary focus:bg-background transition-all"
                 />
-                <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/50" />
+                <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/40" />
               </form>
 
-              {links.map((link) => (
-                <Link key={link.name} to={link.path} onClick={() => setIsOpen(false)}
-                  className="text-xl font-heading font-medium text-foreground hover:text-primary transition-colors">
-                  {t(link.name)}
-                </Link>
-              ))}
-              <div className="pt-4 border-t border-border/60 flex flex-col gap-3">
-                <button onClick={toggleTheme} className="flex items-center gap-2 text-foreground font-medium text-sm py-2">
-                  {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />} Ganti Tema
-                </button>
-                <a href="https://wa.me/6281993294170" target="_blank" rel="noreferrer"
-                  className="bg-primary text-primary-foreground text-center py-3 rounded-full font-heading font-bold text-base">
-                  {t('navbar.orderNow')}
+              {/* Nav links */}
+              <nav className="flex flex-col gap-1 flex-1">
+                {links.map((link, i) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                  >
+                    <Link
+                      to={link.path}
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-between py-4 border-b border-border/30 text-2xl font-heading font-bold text-foreground hover:text-primary transition-colors"
+                    >
+                      {t(link.name)}
+                      <span className="text-foreground/30 text-base">→</span>
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+
+              {/* CTA */}
+              <div className="mt-8">
+                <a
+                  href="https://wa.me/6281993294170"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full bg-primary text-white text-center py-4 rounded-2xl font-heading font-bold text-lg active:scale-95 transition-transform"
+                >
+                  {t('navbar.orderNow')} →
                 </a>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 }
