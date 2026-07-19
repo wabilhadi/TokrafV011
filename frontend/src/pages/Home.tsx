@@ -107,7 +107,7 @@ function DivisionCard({ div, index }: { div: typeof DIVISIONS[0]; index: number 
     >
       <Link to={div.href} className="block group">
         <div
-          className={`relative rounded-[2rem] overflow-hidden bg-gradient-to-br ${div.bg} aspect-square md:aspect-auto md:h-full md:min-h-[360px] flex flex-col justify-end p-5 md:p-6 cursor-pointer`}
+          className={`relative rounded-[2rem] overflow-hidden bg-gradient-to-br ${div.bg} min-h-[220px] md:h-full md:min-h-[360px] flex flex-col justify-end p-5 md:p-6 cursor-pointer`}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
@@ -208,7 +208,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h1 className="text-4xl md:text-7xl font-heading font-extrabold text-foreground leading-tight tracking-tighter mb-4 md:mb-6">
+            <h1 className="text-3xl md:text-7xl font-heading font-extrabold text-foreground leading-tight tracking-tighter mb-4 md:mb-6">
               {t('home.heroTitlePart1')} <br /> <span className="text-primary">{t('home.heroTitlePart2')}</span>
             </h1>
             <p className="text-base md:text-xl font-light text-foreground/80 max-w-3xl mx-auto tracking-tight mb-6 md:mb-8">
@@ -280,9 +280,11 @@ export default function Home() {
               </Link>
             </motion.div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="flex md:grid overflow-x-auto md:overflow-visible snap-x snap-mandatory hide-scrollbar md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 pb-4 md:pb-0 -mx-6 px-6 md:mx-0 md:px-0">
               {recommended.map((product, i) => (
-                <ProductCard key={product.id} product={product} index={i} />
+                <div key={product.id} className="w-[160px] min-w-[160px] md:w-auto md:min-w-0 flex-shrink-0 snap-start">
+                  <ProductCard product={product} index={i} />
+                </div>
               ))}
             </div>
           </div>
@@ -315,13 +317,15 @@ export default function Home() {
             </Link>
           </motion.div>
 
-          {/* Product grid — 3 cols desktop, 2 cols tablet, 1 mobile */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          {/* Product grid — 3 cols desktop, horizontally scrollable mobile */}
+          <div className="flex md:grid overflow-x-auto md:overflow-visible snap-x snap-mandatory hide-scrollbar md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 pb-4 md:pb-0 -mx-6 px-6 md:mx-0 md:px-0">
             {bestsellers.length === 0 ? (
               <div className="col-span-3 text-center py-20 text-foreground/50 text-xl font-light">Belum ada produk.</div>
             ) : (
               bestsellers.map((product, i) => (
-                <ProductCard key={product.id} product={product} index={i} />
+                <div key={product.id} className="w-[160px] min-w-[160px] md:w-auto md:min-w-0 flex-shrink-0 snap-start">
+                  <ProductCard product={product} index={i} />
+                </div>
               ))
             )}
           </div>
@@ -355,18 +359,18 @@ export default function Home() {
         </div>
         <div className="flex gap-8 md:gap-12 items-center justify-center flex-wrap max-w-4xl mx-auto opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
           {/* Dummy text for logos */}
-          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">UNU JOGJA</span>
-          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">PGSD UNU Jogja</span>
-          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">UIN SUKA</span>
-          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">BEM UCY</span>
-          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">AMIKOM YOGYA</span>
-          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">FARMASI UNU Jogja</span>
-          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">FTI UNU Jogja</span>
-          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">FE UNU Jogja</span>
-          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">FLORANCE UNU Jogja</span>
-          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">PERMASUM UNU Jogja</span>
-          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">Wo-Men In Tech Security</span>
-          <span className="text-2xl md:text-3xl font-bold font-heading tracking-tighter">++++</span>
+          <span className="text-xl md:text-3xl font-bold font-heading tracking-tighter">UNU JOGJA</span>
+          <span className="text-xl md:text-3xl font-bold font-heading tracking-tighter">PGSD UNU Jogja</span>
+          <span className="text-xl md:text-3xl font-bold font-heading tracking-tighter">UIN SUKA</span>
+          <span className="text-xl md:text-3xl font-bold font-heading tracking-tighter">BEM UCY</span>
+          <span className="text-xl md:text-3xl font-bold font-heading tracking-tighter">AMIKOM YOGYA</span>
+          <span className="text-xl md:text-3xl font-bold font-heading tracking-tighter">FARMASI UNU Jogja</span>
+          <span className="text-xl md:text-3xl font-bold font-heading tracking-tighter">FTI UNU Jogja</span>
+          <span className="text-xl md:text-3xl font-bold font-heading tracking-tighter">FE UNU Jogja</span>
+          <span className="text-xl md:text-3xl font-bold font-heading tracking-tighter">FLORANCE UNU Jogja</span>
+          <span className="text-xl md:text-3xl font-bold font-heading tracking-tighter">PERMASUM UNU Jogja</span>
+          <span className="text-xl md:text-3xl font-bold font-heading tracking-tighter">Wo-Men In Tech Security</span>
+          <span className="text-xl md:text-3xl font-bold font-heading tracking-tighter">++++</span>
 
         </div>
       </section>
@@ -422,14 +426,14 @@ export default function Home() {
         >
           <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent" />
           <h2
-            className="relative z-10 text-4xl md:text-6xl font-heading font-extrabold text-white tracking-tighter leading-tight mb-8 md:mb-12"
+            className="relative z-10 text-3xl md:text-6xl font-heading font-extrabold text-white tracking-tighter leading-tight mb-6 md:mb-12"
             dangerouslySetInnerHTML={{ __html: t('home.startProject') }}
           />
           <a
             href="https://wa.me/6281993294170"
             target="_blank"
             rel="noreferrer"
-            className="relative z-10 inline-flex bg-white text-black text-lg md:text-2xl font-heading font-bold px-8 md:px-12 py-4 md:py-6 rounded-full hover:bg-primary hover:text-white hover:scale-105 active:scale-95 transition-all shadow-2xl text-center"
+            className="relative z-10 inline-flex bg-white text-black text-base md:text-2xl font-heading font-bold px-6 md:px-12 py-3 md:py-6 rounded-full hover:bg-primary hover:text-white hover:scale-105 active:scale-95 transition-all shadow-2xl text-center"
           >
             {t('home.contactAdmin')}
           </a>
