@@ -51,7 +51,7 @@ export default function Navbar() {
       {/* ── NAVBAR — floating pill on desktop, flush bar on mobile ── */}
       <nav className={`fixed z-50 transition-all duration-500
         /* Mobile: full-width flush bar at top */
-        top-0 left-0 right-0 w-full border-b
+        top-0 left-0 right-0 w-full border-b rounded-b-2xl
         /* Desktop: floating pill */
         md:top-4 md:left-1/2 md:-translate-x-1/2 md:w-[92%] xl:w-[88%] md:max-w-[1280px]
         md:rounded-full md:border

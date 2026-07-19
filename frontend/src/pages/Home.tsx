@@ -188,32 +188,10 @@ export default function Home() {
             {' '}<span className="text-primary">{t('home.heroTitlePart2')}</span>
           </h1>
 
-          <p className="text-foreground/70 mb-6 md:mb-8 leading-relaxed
+          <p className="text-foreground/70 leading-relaxed
             text-[clamp(0.875rem,3vw,1.125rem)] max-w-md mx-auto">
             {t('home.heroSubtitle')}
           </p>
-
-          {/* CTAs */}
-          <div className="flex flex-wrap justify-center gap-3">
-            <Link
-              to="/layanan"
-              className="inline-flex items-center gap-2 bg-primary text-white font-heading font-bold rounded-full
-                px-6 py-3 md:px-8 md:py-4 text-sm md:text-base
-                hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-primary/20"
-            >
-              Lihat Produk <ArrowRight size={16} />
-            </Link>
-            <a
-              href="https://wa.me/6281993294170"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 bg-secondary text-foreground font-heading font-bold rounded-full
-                px-6 py-3 md:px-8 md:py-4 text-sm md:text-base
-                hover:bg-primary/10 active:scale-95 transition-all"
-            >
-              Konsultasi Gratis
-            </a>
-          </div>
         </motion.div>
       </section>
 
@@ -316,10 +294,10 @@ export default function Home() {
       {/* ─────── CLIENT LOGOS ─────── */}
       <section className="py-8 md:py-14 border-y border-border/50 bg-secondary/20 overflow-hidden">
         <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-foreground/40 text-center mb-5">
-          Dipercaya 500+ Klien &amp; Organisasi
+          Dipercaya 100+ Klien &amp; Organisasi
         </p>
         <div className="flex gap-5 md:gap-10 items-center justify-center flex-wrap max-w-3xl mx-auto px-4 opacity-50">
-          {['UNU JOGJA','PGSD UNU','UIN SUKA','BEM UCY','AMIKOM','FTI UNU','FE UNU'].map(n => (
+          {['UNU JOGJA', 'PGSD UNU', 'UIN SUKA', 'BEM UCY', 'AMIKOM', 'FTI UNU', 'FE UNU'].map(n => (
             <span key={n} className="text-sm md:text-xl font-extrabold font-heading tracking-tighter">{n}</span>
           ))}
         </div>
