@@ -48,39 +48,39 @@ export default function Kontak() {
       </section>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 pb-24">
-        <div className="grid lg:grid-cols-2 gap-24">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24">
 
           {/* Contact Info */}
           <div>
-            <h2 className="text-4xl font-heading font-bold text-foreground mb-12">{t('kontak.reachOut')}</h2>
-            <div className="space-y-12">
-              <a href="https://wa.me/6281993294170" target="_blank" rel="noreferrer" className="flex items-start gap-6 group">
-                <div className="w-16 h-16 rounded-full bg-secondary text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
-                  <Phone size={28} />
+            <h2 className="text-4xl font-heading font-bold text-foreground mb-8 md:mb-12">{t('kontak.reachOut')}</h2>
+            <div className="space-y-8 md:space-y-12">
+              <a href="https://wa.me/6281993294170" target="_blank" rel="noreferrer" className="flex items-start gap-4 md:gap-6 group">
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-secondary text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                  <Phone size={24} className="md:w-7 md:h-7" />
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold font-heading text-foreground mb-2">WhatsApp</h4>
-                  <p className="text-2xl font-light text-foreground/70">+62 819-9329-4170</p>
+                  <h4 className="text-lg md:text-xl font-bold font-heading text-foreground mb-1 md:mb-2">WhatsApp</h4>
+                  <p className="text-lg md:text-2xl font-light text-foreground/70">+62 819-9329-4170</p>
                 </div>
               </a>
 
-              <a href="mailto:ekrafhimatika@gmail.com" className="flex items-start gap-6 group">
-                <div className="w-16 h-16 rounded-full bg-secondary text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
-                  <Mail size={28} />
+              <a href="mailto:ekrafhimatika@gmail.com" className="flex items-start gap-4 md:gap-6 group">
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-secondary text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                  <Mail size={24} className="md:w-7 md:h-7" />
                 </div>
-                <div>
-                  <h4 className="text-xl font-bold font-heading text-foreground mb-2">Email</h4>
-                  <p className="text-2xl font-light text-foreground/70">ekrafhimatika@gmail.com</p>
+                <div className="overflow-hidden">
+                  <h4 className="text-lg md:text-xl font-bold font-heading text-foreground mb-1 md:mb-2">Email</h4>
+                  <p className="text-lg md:text-2xl font-light text-foreground/70 truncate">ekrafhimatika@gmail.com</p>
                 </div>
               </a>
 
-              <div className="flex items-start gap-6">
-                <div className="w-16 h-16 rounded-full bg-secondary text-primary flex items-center justify-center shrink-0">
-                  <MapPin size={28} />
+              <div className="flex items-start gap-4 md:gap-6">
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-secondary text-primary flex items-center justify-center shrink-0">
+                  <MapPin size={24} className="md:w-7 md:h-7" />
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold font-heading text-foreground mb-2">{t('kontak.office')}</h4>
-                  <p className="text-xl font-light text-foreground/70 max-w-xs leading-relaxed">
+                  <h4 className="text-lg md:text-xl font-bold font-heading text-foreground mb-1 md:mb-2">{t('kontak.office')}</h4>
+                  <p className="text-base md:text-xl font-light text-foreground/70 max-w-xs leading-relaxed">
                     {t('kontak.address')}
                   </p>
                 </div>
@@ -89,8 +89,8 @@ export default function Kontak() {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-secondary/70 backdrop-blur-2xl border border-border/50 shadow-2xl p-10 md:p-16 rounded-[3rem]">
-            <h3 className="text-3xl font-heading font-bold text-foreground mb-10">{t('kontak.sendMessage')}</h3>
+          <div className="bg-secondary/70 backdrop-blur-2xl border border-border/50 shadow-2xl p-6 md:p-16 rounded-[2rem] md:rounded-[3rem]">
+            <h3 className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-8 md:mb-10">{t('kontak.sendMessage')}</h3>
 
             {status === 'success' ? (
               <motion.div

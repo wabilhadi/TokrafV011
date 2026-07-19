@@ -202,16 +202,16 @@ export default function Home() {
 
       {/* ── HERO ── */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-        <motion.div style={{ y: yHero, opacity: opacityHero }} className="relative z-10 text-center px-6 -mt-20 md:-mt-32">
+        <motion.div style={{ y: yHero, opacity: opacityHero }} className="relative z-10 text-center px-6 -mt-10 md:-mt-32">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h1 className="text-5xl md:text-7xl font-heading font-extrabold text-foreground leading-tight tracking-tighter mb-6">
+            <h1 className="text-4xl md:text-7xl font-heading font-extrabold text-foreground leading-tight tracking-tighter mb-4 md:mb-6">
               {t('home.heroTitlePart1')} <br /> <span className="text-primary">{t('home.heroTitlePart2')}</span>
             </h1>
-            <p className="text-lg md:text-xl font-light text-foreground/80 max-w-3xl mx-auto tracking-tight mb-8">
+            <p className="text-base md:text-xl font-light text-foreground/80 max-w-3xl mx-auto tracking-tight mb-6 md:mb-8">
               {t('home.heroSubtitle')}
             </p>
             <a
@@ -418,18 +418,18 @@ export default function Home() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="relative z-10 w-full max-w-[1000px] bg-white/10 backdrop-blur-3xl border border-white/20 shadow-2xl rounded-[2rem] p-12 md:p-20 text-center overflow-hidden"
+          className="relative z-10 w-full max-w-[1000px] bg-white/10 backdrop-blur-3xl border border-white/20 shadow-2xl rounded-[2rem] p-8 md:p-20 text-center overflow-hidden"
         >
           <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent" />
           <h2
-            className="relative z-10 text-4xl md:text-6xl font-heading font-extrabold text-white tracking-tighter leading-tight mb-12"
+            className="relative z-10 text-4xl md:text-6xl font-heading font-extrabold text-white tracking-tighter leading-tight mb-8 md:mb-12"
             dangerouslySetInnerHTML={{ __html: t('home.startProject') }}
           />
           <a
             href="https://wa.me/6281993294170"
             target="_blank"
             rel="noreferrer"
-            className="relative z-10 inline-flex bg-white text-black text-2xl font-heading font-bold px-12 py-6 rounded-full hover:bg-primary hover:text-white hover:scale-105 active:scale-95 transition-all shadow-2xl"
+            className="relative z-10 inline-flex bg-white text-black text-lg md:text-2xl font-heading font-bold px-8 md:px-12 py-4 md:py-6 rounded-full hover:bg-primary hover:text-white hover:scale-105 active:scale-95 transition-all shadow-2xl text-center"
           >
             {t('home.contactAdmin')}
           </a>

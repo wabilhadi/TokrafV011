@@ -94,7 +94,7 @@ export default function Layanan() {
             <Link 
               key={tab.id} 
               to={tab.path} 
-              className={`px-8 py-4 rounded-full font-sans font-medium text-sm uppercase tracking-widest transition-all duration-300 ${
+              className={`px-5 py-2.5 md:px-8 md:py-4 rounded-full font-sans font-medium text-xs md:text-sm uppercase tracking-widest transition-all duration-300 ${
                 currentCategory === tab.id 
                   ? 'bg-foreground text-background' 
                   : 'bg-transparent text-foreground border border-foreground/20 hover:border-foreground'

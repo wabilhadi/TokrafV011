@@ -14,45 +14,45 @@ export default function Footer() {
             <Link to="/" className="text-4xl md:text-5xl font-heading font-extrabold text-white tracking-tighter block mb-6">
               TOKRAF.
             </Link>
-            <p className="text-pink-200 text-2xl font-heading font-light max-w-md leading-snug">
+            <p className="text-pink-200 text-xl md:text-2xl font-heading font-light max-w-md leading-snug">
               {t('footer.desc')}
             </p>
           </div>
 
           {/* Menu disatukan dalam grid 2 kolom untuk mobile agar tidak terlalu panjang */}
-          <div className="grid grid-cols-2 gap-6 lg:gap-10 lg:col-span-4">
+          <div className="grid grid-cols-2 gap-4 md:gap-6 lg:gap-10 lg:col-span-4">
             <div>
               <h3 className="font-sans text-xs md:text-sm tracking-widest text-pink-300 uppercase mb-4 lg:mb-6">{t('navbar.services')}</h3>
               <ul className="space-y-3 lg:space-y-4">
-                <li><Link to="/layanan/konveksi" className="text-lg md:text-xl font-heading hover:text-pink-200 transition-colors">Tokraf Konveksi</Link></li>
-                <li><Link to="/layanan/merch" className="text-lg md:text-xl font-heading hover:text-pink-200 transition-colors">Tokraf Merch</Link></li>
-                <li><Link to="/layanan/digital-printing" className="text-lg md:text-xl font-heading hover:text-pink-200 transition-colors">Printing</Link></li>
+                <li><Link to="/layanan/konveksi" className="text-base md:text-xl font-heading hover:text-pink-200 transition-colors">Tokraf Konveksi</Link></li>
+                <li><Link to="/layanan/merch" className="text-base md:text-xl font-heading hover:text-pink-200 transition-colors">Tokraf Merch</Link></li>
+                <li><Link to="/layanan/digital-printing" className="text-base md:text-xl font-heading hover:text-pink-200 transition-colors">Printing</Link></li>
               </ul>
             </div>
             <div>
               <h3 className="font-sans text-xs md:text-sm tracking-widest text-pink-300 uppercase mb-4 lg:mb-6">{t('footer.quickLinks')}</h3>
               <ul className="space-y-3 lg:space-y-4">
-                <li><Link to="/tentang" className="text-lg md:text-xl font-heading hover:text-pink-200 transition-colors">{t('navbar.about')}</Link></li>
-                <li><Link to="/portofolio" className="text-lg md:text-xl font-heading hover:text-pink-200 transition-colors">{t('navbar.portfolio')}</Link></li>
-                <li><Link to="/kontak" className="text-lg md:text-xl font-heading hover:text-pink-200 transition-colors">{t('navbar.contact')}</Link></li>
+                <li><Link to="/tentang" className="text-base md:text-xl font-heading hover:text-pink-200 transition-colors">{t('navbar.about')}</Link></li>
+                <li><Link to="/portofolio" className="text-base md:text-xl font-heading hover:text-pink-200 transition-colors">{t('navbar.portfolio')}</Link></li>
+                <li><Link to="/kontak" className="text-base md:text-xl font-heading hover:text-pink-200 transition-colors">{t('navbar.contact')}</Link></li>
               </ul>
             </div>
           </div>
 
           <div className="lg:col-span-3">
-            <h3 className="font-sans text-sm tracking-widest text-pink-300 uppercase mb-6">{t('navbar.contact')}</h3>
+            <h3 className="font-sans text-xs md:text-sm tracking-widest text-pink-300 uppercase mb-4 lg:mb-6">{t('navbar.contact')}</h3>
             <ul className="space-y-4">
-              <li className="flex items-start gap-4 text-pink-100 group cursor-pointer">
-                <MapPin size={24} className="shrink-0 mt-1" />
-                <span className="text-lg leading-tight group-hover:text-white transition-colors">{t('kontak.address')}</span>
+              <li className="flex items-start gap-3 md:gap-4 text-pink-100 group cursor-pointer">
+                <MapPin size={20} className="shrink-0 mt-1" />
+                <span className="text-sm md:text-lg leading-tight group-hover:text-white transition-colors">{t('kontak.address')}</span>
               </li>
-              <li className="flex items-center gap-4 text-pink-100 group cursor-pointer">
-                <Phone size={24} className="shrink-0" />
-                <span className="text-lg group-hover:text-white transition-colors">+62 819-9329-4170</span>
+              <li className="flex items-center gap-3 md:gap-4 text-pink-100 group cursor-pointer">
+                <Phone size={20} className="shrink-0" />
+                <span className="text-sm md:text-lg group-hover:text-white transition-colors">+62 819-9329-4170</span>
               </li>
-              <li className="flex items-center gap-4 text-pink-100 group cursor-pointer">
-                <Mail size={24} className="shrink-0" />
-                <span className="text-lg group-hover:text-white transition-colors">ekrafhimatika@gmail.com</span>
+              <li className="flex items-center gap-3 md:gap-4 text-pink-100 group cursor-pointer">
+                <Mail size={20} className="shrink-0" />
+                <span className="text-sm md:text-lg group-hover:text-white transition-colors">ekrafhimatika@gmail.com</span>
               </li>
             </ul>
           </div>
