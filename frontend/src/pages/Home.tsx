@@ -78,14 +78,14 @@ function ProductCard({ product, index }: { product: any; index: number }) {
           </div>
         </div>
 
-        <div className="flex justify-between items-start pr-2">
+        <div className="flex flex-col md:flex-row md:justify-between items-start gap-2 md:gap-0 pr-2">
           <div>
-            <h3 className="text-2xl font-sans font-medium text-foreground mb-1 group-hover:text-primary transition-colors">
+            <h3 className="text-lg md:text-2xl font-sans font-medium text-foreground mb-1 group-hover:text-primary transition-colors leading-tight">
               {product.name}
             </h3>
-            <p className="text-foreground/50 text-sm font-sans">{product.divisi?.replace('_', ' ')}</p>
+            <p className="text-foreground/50 text-xs md:text-sm font-sans">{product.divisi?.replace('_', ' ')}</p>
           </div>
-          <p className="text-xl font-sans font-medium text-foreground">
+          <p className="text-base md:text-xl font-sans font-medium text-foreground whitespace-nowrap">
             Rp {product.price?.toLocaleString('id-ID')}
           </p>
         </div>
@@ -134,7 +134,7 @@ function DivisionCard({ div, index }: { div: typeof DIVISIONS[0]; index: number 
           {/* Content */}
           <div className="relative z-10 mt-6">
             <motion.h3
-              className="text-3xl md:text-4xl font-extrabold text-white tracking-tighter leading-tight mb-3"
+              className="text-2xl md:text-4xl font-extrabold text-white tracking-tighter leading-tight mb-3"
               animate={{ y: hovered ? -4 : 0 }}
               transition={{ duration: 0.35 }}
             >
@@ -241,7 +241,7 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-foreground tracking-tighter mt-2 mb-4">
               3 Divisi.<br /><span className="text-primary/40">Satu Atap.</span>
             </h2>
-            <p className="text-foreground/60 text-lg md:text-xl max-w-lg leading-relaxed">
+            <p className="text-foreground/60 text-base md:text-xl max-w-lg leading-relaxed">
               Semua kebutuhan produksi kreatifmu — dari pakaian custom hingga cetak banner — tersedia dalam satu platform.
             </p>
           </motion.div>

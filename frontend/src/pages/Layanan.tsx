@@ -138,10 +138,10 @@ function ProductCard({ product, idx, tabs }: { product: Product, idx: number, ta
   const aspectRatio = aspectRatios[idx % aspectRatios.length];
 
   // Randomize width and alignment to create a loose, chaotic, free-flowing moodboard
-  const widths = ['w-full', 'w-[85%]', 'w-[90%]'];
+  const widths = ['w-full', 'w-full md:w-[85%]', 'w-full md:w-[90%]'];
   const widthClass = widths[idx % widths.length];
   
-  const alignments = ['self-start', 'self-end', 'self-center'];
+  const alignments = ['self-start', 'self-start md:self-end', 'self-start md:self-center'];
   const alignClass = alignments[idx % alignments.length];
 
   const handleMouseEnter = () => {
@@ -214,20 +214,20 @@ function ProductCard({ product, idx, tabs }: { product: Product, idx: number, ta
           </motion.div>
         </div>
 
-        <div className="flex justify-between items-start">
-          <div className="pr-4">
-            <h3 className="text-xl md:text-2xl font-medium font-sans text-foreground mb-1 leading-tight group-hover:text-primary transition-colors">
+        <div className="flex flex-col md:flex-row md:justify-between items-start gap-2 md:gap-0">
+          <div className="pr-0 md:pr-4">
+            <h3 className="text-lg md:text-2xl font-medium font-sans text-foreground mb-1 leading-tight group-hover:text-primary transition-colors">
               {product.name}
             </h3>
             <p className="text-foreground/60 text-xs md:text-sm font-sans max-w-sm line-clamp-2">
               {product.description}
             </p>
           </div>
-          <div className="text-right flex-shrink-0">
+          <div className="text-left md:text-right flex-shrink-0">
             <p className="text-[10px] md:text-xs font-bold font-sans uppercase tracking-widest text-foreground/80 mb-1">
               {tabs.find(t => t.id === product.category)?.label || product.category}
             </p>
-            <p className="text-lg font-medium font-sans text-foreground">
+            <p className="text-base md:text-lg font-medium font-sans text-foreground whitespace-nowrap">
               Rp {Number(product.price || 0).toLocaleString('id-ID')}
             </p>
           </div>
