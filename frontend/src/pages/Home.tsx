@@ -199,54 +199,54 @@ export default function Home() {
     <div className="w-full bg-background overflow-x-hidden font-sans">
 
       {/* ── HERO ── */}
-      <section className="relative min-h-[70vh] md:min-h-[85vh] w-full flex flex-col items-center justify-center pt-32 pb-16 overflow-hidden">
+      <section className="relative min-h-[40vh] md:min-h-[85vh] w-full flex flex-col items-center justify-center pt-24 pb-8 md:pt-32 md:pb-16 overflow-hidden">
         <motion.div style={{ y: yHero, opacity: opacityHero }} className="relative z-10 text-center px-4 w-full max-w-[1200px] mx-auto flex flex-col items-center">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="w-full"
           >
-            <h1 className="font-heading font-extrabold text-foreground leading-[1.1] tracking-tighter mb-6 text-[clamp(2.5rem,6vw,5rem)]">
+            <h1 className="font-heading font-extrabold text-foreground leading-[1.05] tracking-tighter mb-3 md:mb-6 text-[clamp(2.5rem,8vw,5rem)]">
               {t('home.heroTitlePart1')} <br className="md:hidden" /> <span className="text-primary">{t('home.heroTitlePart2')}</span>
             </h1>
-            <p className="font-light text-foreground/80 max-w-2xl mx-auto tracking-tight mb-10 text-[clamp(1rem,2vw,1.25rem)] px-4">
+            <p className="font-light text-foreground/80 max-w-2xl mx-auto tracking-tight mb-6 md:mb-10 text-[clamp(0.875rem,2.5vw,1.25rem)] px-2 md:px-4">
               {t('home.heroSubtitle')}
             </p>
             <a
               href="#divisions"
-              className="inline-flex items-center gap-4 text-primary font-heading font-bold text-lg md:text-xl uppercase tracking-widest hover:text-foreground transition-colors group"
+              className="inline-flex items-center gap-2 md:gap-4 text-primary font-heading font-bold text-sm md:text-xl uppercase tracking-widest hover:text-foreground transition-colors group"
             >
-              {t('home.explore')} <ArrowRight className="group-hover:translate-x-2 transition-transform" />
+              {t('home.explore')} <ArrowRight size={16} className="group-hover:translate-x-1 md:group-hover:translate-x-2 transition-transform" />
             </a>
           </motion.div>
         </motion.div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] md:w-[50vw] md:h-[50vw] bg-accent/20 rounded-full blur-[100px] md:blur-[150px] -z-10" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vw] md:w-[50vw] md:h-[50vw] bg-accent/20 rounded-full blur-[80px] md:blur-[150px] -z-10" />
       </section>
 
-      {/* ── DIVISIONS — 3-column compact (Seed-style) ── */}
-      <section id="divisions" className="py-16 md:py-24 px-4 md:px-8">
+      {/* ── DIVISIONS ── */}
+      <section id="divisions" className="py-8 md:py-24 px-4 md:px-8">
         <div className="max-w-[1400px] mx-auto">
 
           {/* Section header */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="mb-10 md:mb-16 text-center md:text-left"
+            transition={{ duration: 0.5 }}
+            className="mb-6 md:mb-16 text-center md:text-left"
           >
-            <span className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-primary/70">Ekosistem Tokraf</span>
-            <h2 className="font-heading font-extrabold text-foreground tracking-tighter mt-3 mb-4 md:mb-6 text-[clamp(2rem,4vw,3.5rem)] leading-tight">
+            <span className="text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] text-primary/70">Ekosistem Tokraf</span>
+            <h2 className="font-heading font-extrabold text-foreground tracking-tighter mt-1 md:mt-3 mb-2 md:mb-6 text-[clamp(1.75rem,5vw,3.5rem)] leading-tight">
               3 Divisi.<br className="hidden md:block" /> <span className="text-primary/40">Satu Atap.</span>
             </h2>
-            <p className="text-foreground/60 max-w-2xl leading-relaxed mx-auto md:mx-0 text-[clamp(1rem,1.5vw,1.125rem)]">
+            <p className="text-foreground/60 max-w-2xl leading-relaxed mx-auto md:mx-0 text-[clamp(0.875rem,1.5vw,1.125rem)]">
               Semua kebutuhan produksi kreatifmu — dari pakaian custom hingga cetak banner — tersedia dalam satu platform.
             </p>
           </motion.div>
 
           {/* 3-column grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {DIVISIONS.map((div, i) => (
               <DivisionCard key={div.key} div={div} index={i} />
             ))}
@@ -256,31 +256,31 @@ export default function Home() {
 
       {/* ── REKOMENDASI PRODUK ── */}
       {recommended.length > 0 && (
-        <section id="recommended" className="py-16 md:py-24 bg-card rounded-[2rem] mx-4 my-8 overflow-hidden border border-border/50">
+        <section id="recommended" className="py-8 md:py-24 bg-card md:rounded-[2rem] mx-0 md:mx-4 my-2 md:my-8 overflow-hidden md:border border-border/50">
           <div className="max-w-[1400px] mx-auto px-4 md:px-8">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-12 gap-6"
+              transition={{ duration: 0.5 }}
+              className="flex items-end justify-between mb-6 md:mb-12 gap-2"
             >
               <div>
-                <span className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-primary/70">Pilihan Admin</span>
-                <h2 className="font-heading font-extrabold text-foreground tracking-tighter mt-2 text-[clamp(2rem,4vw,3.5rem)] leading-tight">
-                  Rekomendasi<br className="hidden md:block" /> <span className="text-primary">Produk.</span>
+                <span className="text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] text-primary/70">Pilihan Admin</span>
+                <h2 className="font-heading font-extrabold text-foreground tracking-tighter mt-1 text-[clamp(1.5rem,4vw,3.5rem)] leading-tight">
+                  Rekomendasi
                 </h2>
               </div>
               <Link
                 to="/layanan"
-                className="self-start md:self-end inline-flex items-center gap-3 bg-secondary text-foreground font-heading font-bold px-6 py-3 md:px-8 md:py-4 rounded-full hover:bg-primary hover:text-white transition-all hover:scale-105 shadow-sm shrink-0"
+                className="self-end inline-flex items-center gap-1 md:gap-3 bg-secondary text-foreground font-heading font-bold px-3 py-1.5 md:px-8 md:py-4 rounded-full hover:bg-primary hover:text-white transition-all hover:scale-105 shadow-sm shrink-0 text-xs md:text-base"
               >
-                Katalog Lengkap <ArrowRight size={18} />
+                Lihat Semua <ArrowRight size={14} className="md:w-5 md:h-5" />
               </Link>
             </motion.div>
 
             {/* Grid berubah otomatis: 2 di mobile, 3 di tablet, 4 di laptop, 5-6 di desktop */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 md:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-6">
               {recommended.map((product, i) => (
                 <ProductCard key={product.id} product={product} index={i} />
               ))}
@@ -290,35 +290,35 @@ export default function Home() {
       )}
 
       {/* ── PRODUK TERLARIS ── */}
-      <section id="popular" className="py-16 md:py-24 bg-secondary rounded-[2rem] mx-4 my-8 overflow-hidden">
+      <section id="popular" className="py-8 md:py-24 bg-secondary md:rounded-[2rem] mx-0 md:mx-4 my-2 md:my-8 overflow-hidden">
         <div className="max-w-[1400px] mx-auto px-4 md:px-8">
 
           {/* Header */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-12 gap-6"
+            transition={{ duration: 0.5 }}
+            className="flex items-end justify-between mb-6 md:mb-12 gap-2"
           >
             <div>
-              <span className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-primary/70">Pilihan Populer</span>
-              <h2 className="font-heading font-extrabold text-foreground tracking-tighter mt-2 text-[clamp(2rem,4vw,3.5rem)] leading-tight">
-                Produk<br className="hidden md:block" /> <span className="text-primary">Terlaris.</span>
+              <span className="text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] text-primary/70">Pilihan Populer</span>
+              <h2 className="font-heading font-extrabold text-foreground tracking-tighter mt-1 text-[clamp(1.5rem,4vw,3.5rem)] leading-tight">
+                Terlaris
               </h2>
             </div>
             <Link
               to="/layanan"
-              className="self-start md:self-end inline-flex items-center gap-3 bg-primary text-white font-heading font-bold px-6 py-3 md:px-8 md:py-4 rounded-full hover:bg-foreground transition-all hover:scale-105 shadow-lg shrink-0"
+              className="self-end inline-flex items-center gap-1 md:gap-3 bg-primary text-white font-heading font-bold px-3 py-1.5 md:px-8 md:py-4 rounded-full hover:bg-foreground transition-all hover:scale-105 shadow-lg shrink-0 text-xs md:text-base"
             >
-              Lihat Semua <ArrowRight size={18} />
+              Lihat Semua <ArrowRight size={14} className="md:w-5 md:h-5" />
             </Link>
           </motion.div>
 
           {/* Grid berubah otomatis: 2 di mobile, 3 di tablet, 4 di laptop, 5-6 di desktop */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-6">
             {bestsellers.length === 0 ? (
-              <div className="col-span-full text-center py-20 text-foreground/50 text-lg md:text-xl font-light">Belum ada produk.</div>
+              <div className="col-span-full text-center py-10 md:py-20 text-foreground/50 text-sm md:text-xl font-light">Belum ada produk.</div>
             ) : (
               bestsellers.map((product, i) => (
                 <ProductCard key={product.id} product={product} index={i} />
@@ -328,11 +328,11 @@ export default function Home() {
 
           {/* Stats row */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="grid grid-cols-3 gap-2 md:gap-4 mt-12 md:mt-16 pt-8 border-t border-border"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="grid grid-cols-3 gap-2 md:gap-4 mt-8 md:mt-16 pt-6 md:pt-8 border-t border-border"
           >
             {[
               { val: '100+', label: 'Klien Puas' },
@@ -340,8 +340,8 @@ export default function Home() {
               { val: '100%', label: 'Custom Made' },
             ].map(s => (
               <div key={s.label} className="text-center">
-                <div className="text-2xl md:text-4xl font-extrabold text-primary mb-1 md:mb-2">{s.val}</div>
-                <div className="text-[10px] md:text-sm font-bold text-foreground/50 uppercase tracking-widest">{s.label}</div>
+                <div className="text-lg md:text-4xl font-extrabold text-primary mb-0.5 md:mb-2">{s.val}</div>
+                <div className="text-[8px] md:text-sm font-bold text-foreground/50 uppercase tracking-widest">{s.label}</div>
               </div>
             ))}
           </motion.div>
@@ -403,7 +403,7 @@ export default function Home() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="relative min-h-[50vh] md:min-h-[60vh] flex flex-col items-center justify-center py-16 px-4 md:p-12 overflow-hidden mx-4 mb-16 md:mb-24 rounded-[2rem]">
+      <section className="relative min-h-[40vh] md:min-h-[60vh] flex flex-col items-center justify-center py-12 px-4 md:p-12 overflow-hidden mx-2 md:mx-4 mb-24 md:mb-32 rounded-[1.5rem] md:rounded-[2rem]">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <motion.img
             style={{ y: yBgCTA, scale: 1.2 }}
@@ -417,19 +417,19 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="relative z-10 w-full max-w-[900px] bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl rounded-[2rem] p-8 md:p-16 text-center overflow-hidden flex flex-col items-center"
+          transition={{ duration: 0.5 }}
+          className="relative z-10 w-full max-w-[900px] bg-white/10 backdrop-blur-xl md:backdrop-blur-2xl border border-white/20 shadow-2xl rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-16 text-center overflow-hidden flex flex-col items-center"
         >
           <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent" />
           <h2
-            className="relative z-10 font-heading font-extrabold text-white tracking-tighter leading-tight mb-8 md:mb-10 text-[clamp(2rem,5vw,4.5rem)]"
+            className="relative z-10 font-heading font-extrabold text-white tracking-tighter leading-tight mb-6 md:mb-10 text-[clamp(1.75rem,5vw,4.5rem)]"
             dangerouslySetInnerHTML={{ __html: t('home.startProject') }}
           />
           <a
             href="https://wa.me/6281993294170"
             target="_blank"
             rel="noreferrer"
-            className="relative z-10 inline-flex justify-center items-center bg-white text-black text-base md:text-xl font-heading font-bold px-8 md:px-12 py-4 md:py-5 rounded-full hover:bg-primary hover:text-white hover:scale-105 active:scale-95 transition-all shadow-xl"
+            className="relative z-10 inline-flex justify-center items-center bg-white text-black text-sm md:text-xl font-heading font-bold px-6 py-3 md:px-12 md:py-5 rounded-full hover:bg-primary hover:text-white hover:scale-105 active:scale-95 transition-all shadow-xl"
           >
             {t('home.contactAdmin')}
           </a>

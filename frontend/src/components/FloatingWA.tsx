@@ -32,19 +32,18 @@ export default function FloatingWA() {
           exit={{ opacity: 0, scale: 0.5, y: 50 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[99] bg-[#25D366] text-white p-4 rounded-full shadow-2xl flex items-center justify-center group"
+          className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-[99] bg-[#25D366] text-white p-3 md:p-4 rounded-full shadow-2xl flex items-center justify-center group"
           aria-label="Tanya via WhatsApp"
         >
           {/* Tooltip */}
-          <span className="absolute right-full mr-4 bg-background text-foreground text-sm font-bold px-4 py-2 rounded-xl shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-border">
+          <span className="absolute right-full mr-4 bg-background text-foreground text-sm font-bold px-4 py-2 rounded-xl shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-border hidden md:block">
             Tanya Admin
           </span>
           
           {/* WA Icon SVG */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
+            className="w-6 h-6 md:w-7 md:h-7"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

@@ -43,15 +43,15 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={`fixed top-4 left-4 right-4 md:left-8 md:right-8 lg:left-1/2 lg:-translate-x-1/2 lg:w-[90%] xl:w-[85%] max-w-[1280px] z-50 transition-all duration-500 rounded-full border shadow-xl ${scrolled ? 'bg-background/95 backdrop-blur-2xl border-border/50 py-1' : 'bg-background/60 backdrop-blur-md border-border/30 py-2'
+    <nav className={`fixed top-0 left-0 right-0 w-full md:top-4 md:left-1/2 md:-translate-x-1/2 md:w-[95%] lg:w-[90%] xl:w-[85%] max-w-[1280px] z-50 transition-all duration-500 md:rounded-full border-b md:border shadow-sm md:shadow-xl ${scrolled ? 'bg-background/95 backdrop-blur-2xl border-border/50 py-1' : 'bg-background/90 md:bg-background/60 backdrop-blur-md border-border/30 py-1.5 md:py-2'
       }`}>
       <div className="w-full px-4 md:px-6 xl:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-12 md:h-16">
 
           {/* Kiri: Logo dengan Jarak yang Pas */}
-          <div className="flex-shrink-0 pr-6">
+          <div className="flex-shrink-0 pr-4 md:pr-6">
             <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="text-2xl md:text-3xl font-heading font-extrabold text-primary tracking-tighter">
+              className="text-xl md:text-3xl font-heading font-extrabold text-primary tracking-tighter">
               TOKRAF
             </Link>
           </div>
@@ -113,15 +113,15 @@ export default function Navbar() {
           {/* Tombol Menu Mobile */}
           <div className="md:hidden flex items-center gap-3">
             <button onClick={() => navigate('/cart')} className="relative p-1.5 text-foreground hover:text-primary" aria-label="Keranjang">
-              <ShoppingBag size={22} />
+              <ShoppingBag size={20} />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
             </button>
-            <button onClick={() => setIsOpen(!isOpen)} className="text-primary p-2">
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
+            <button onClick={() => setIsOpen(!isOpen)} className="text-primary p-1.5">
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
 

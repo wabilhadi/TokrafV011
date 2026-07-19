@@ -72,11 +72,11 @@ export default function Layanan() {
     <div className={`w-full min-h-screen pb-20 bg-background text-foreground transition-colors duration-500`}>
 
       {/* Header Section */}
-      <div className="pt-32 pb-8 px-4 md:px-8 max-w-[1400px] mx-auto border-b border-foreground/10">
+      <div className="pt-20 md:pt-32 pb-4 md:pb-8 px-4 md:px-8 max-w-[1400px] mx-auto border-b border-foreground/10">
         <motion.h1 
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-bold font-heading tracking-tight leading-tight mb-4 text-[clamp(2.5rem,5vw,4.5rem)]"
+          className="font-bold font-heading tracking-tight leading-[1.1] mb-2 md:mb-4 text-[clamp(2.5rem,5vw,4.5rem)]"
         >
           {searchQuery 
             ? `Search: "${searchQuery}"` 

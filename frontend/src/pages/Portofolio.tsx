@@ -58,26 +58,26 @@ export default function Portofolio() {
     <div className="w-full bg-background min-h-screen">
 
       {/* Parallax Header */}
-      <section className="relative min-h-[50vh] md:min-h-[60vh] flex flex-col items-start justify-end pb-16 pt-32 overflow-hidden rounded-b-[2rem] md:rounded-b-[3rem] shadow-xl md:shadow-2xl mb-16 md:mb-24">
+      <section className="relative min-h-[40vh] md:min-h-[60vh] flex flex-col items-start justify-end pb-8 md:pb-16 pt-24 md:pt-32 overflow-hidden rounded-b-[1.5rem] md:rounded-b-[3rem] shadow-xl md:shadow-2xl mb-8 md:mb-24">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <motion.img style={{ y: yBg, scale: 1.2 }} src="/assets/bg_portofolio.png" className="w-full h-full object-cover origin-top" alt="Portofolio" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-black/50 to-black/20" />
         </div>
         <div className="relative z-10 max-w-[1400px] w-full mx-auto px-4 md:px-8 mt-12 md:mt-32">
-          <motion.h1 initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }}
-            className="font-extrabold font-heading text-white tracking-tighter leading-tight mb-4 md:mb-8 text-[clamp(2.5rem,5vw,5rem)]">
+          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+            className="font-extrabold font-heading text-white tracking-tighter leading-[1.1] mb-2 md:mb-8 text-[clamp(2.5rem,5vw,5rem)]">
             {t('portofolio.gallery')}
           </motion.h1>
-          <p className="font-light text-white/80 max-w-2xl text-[clamp(1rem,2vw,1.5rem)]">{t('portofolio.galleryDesc')}</p>
+          <p className="font-light text-white/80 max-w-2xl text-[clamp(1rem,2vw,1.5rem)] leading-tight">{t('portofolio.galleryDesc')}</p>
         </div>
       </section>
 
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 pb-16 md:pb-24">
         {/* Filter Tabs */}
-        <div className="mb-8 md:mb-12 flex flex-wrap gap-2 md:gap-4">
+        <div className="mb-6 md:mb-12 flex flex-wrap gap-2 md:gap-4">
           {tabs.map((tab) => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-              className={`px-5 py-2 md:px-8 md:py-4 rounded-full font-heading font-bold text-sm md:text-lg transition-all ${
+              className={`px-4 py-1.5 md:px-8 md:py-4 rounded-full font-heading font-bold text-xs md:text-lg transition-all ${
                 activeTab === tab.id
                   ? 'bg-primary text-primary-foreground shadow-md md:shadow-xl md:scale-105'
                   : 'bg-secondary text-foreground hover:bg-foreground hover:text-background'

@@ -31,14 +31,14 @@ export default function Kontak() {
     <div className="w-full bg-background min-h-screen">
 
       {/* Parallax Header */}
-      <section className="relative min-h-[50vh] md:min-h-[60vh] flex flex-col items-center justify-center pt-32 pb-16 overflow-hidden rounded-b-[2rem] md:rounded-b-[3rem] shadow-xl md:shadow-2xl mb-16 md:mb-24">
+      <section className="relative min-h-[40vh] md:min-h-[60vh] flex flex-col items-center justify-center pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden rounded-b-[1.5rem] md:rounded-b-[3rem] shadow-xl md:shadow-2xl mb-8 md:mb-24">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <motion.img style={{ y: yBg, scale: 1.2 }} src="/assets/bg_kontak.png" className="w-full h-full object-cover origin-top" alt="Kontak Background" />
           <div className="absolute inset-0 bg-black/40" />
         </div>
         <div className="relative z-10 text-center px-4 w-full">
           <motion.h1
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             className="font-extrabold font-heading text-white tracking-tighter leading-tight text-[clamp(2.5rem,5vw,5rem)]"
           >
@@ -48,7 +48,7 @@ export default function Kontak() {
       </section>
 
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 pb-16 md:pb-24">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-24">
 
           {/* Contact Info */}
           <div>
