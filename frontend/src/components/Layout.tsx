@@ -7,8 +7,8 @@ export default function Layout() {
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
       <Navbar />
-      {/* page-top uses the CSS variable --navbar-h defined in index.css */}
-      <main className="flex-grow page-top">
+      {/* pill offset: top-3(12px) + 52px height + 4px gap = 68px */}
+      <main className="flex-grow" style={{ paddingTop: '68px' }}>
         <Outlet />
       </main>
       <FloatingWA />
